@@ -1,0 +1,10 @@
+#!/bin/bash
+jupyter labextension install @jupyter-widgets/jupyterlab-manager 
+jupyter labextension install jupyter-threejs
+jupyter labextension install jupyter-matplotlib
+jupyter nbextension      enable --py --sys-prefix appmode
+jupyter serverextension  enable --py --sys-prefix appmode
+jupyter nbextension      enable --py widgetsnbextension
+jupyter nbextension install --py --symlink --sys-prefix nglview
+jupyter nbextension enable --py --sys-prefix nglview
+jupyter labextension install bqplot

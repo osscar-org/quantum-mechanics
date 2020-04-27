@@ -1,0 +1,12 @@
+jupyterlab==2.1.1
+ipywidgets==7.5.0
+numpy==1.18.2
+appmode==0.7.0
+IPython==7.8.0
+voila==0.1.21 
+nglview==2.7.5 
+ase==3.19.1
+pythreejs==2.2.0 
+bqplot==0.11.9
+sklearn
+ipympl==0.3 
