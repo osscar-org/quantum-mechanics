@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% macro error_body(code, message) -%}
+  <main>
+    <div class="container">
+      <div class="row">
+        <div class="col s12">
+          <h1>{{ code }}: {{ message }}</h1>
+          {{ caller() }}
+        </div>
+      </div>
+    </div>
+  </main>
+{%- endmacro %}
+
+{% block body %}
+  {{ error_body(status_code, status_message) }}
+{% endblock %}

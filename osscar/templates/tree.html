@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block head %}
+<style type="text/css">
+  .voila-logo:hover {
+    background-color: transparent !important;
+  }
+</style>
+{% endblock %}
+
+{% block body %}
+  <header>
+    <div class="navbar-fixed">
+      <nav class="top-nav">
+        <div class="nav-wrapper">
+        </div>
+      </nav>
+    </div>
+
+    <ul class="sidenav sidenav-fixed grey lighten-5">
+      <li class=brand-logo-container>
+        <a class="voila-logo">
+          <object class="brand-logo" type="image/svg+xml" data="{{base_url}}voila/static/voila_logo_bleu.svg"></object>
+        </a>
+      </li>
+      <li><div class="divider"></div></li>
+
+      {% if breadcrumbs|length > 1: %}
+        <li><a class="sidenav-link" href="{{breadcrumbs[-2][0]}}"><i class="material-icons">folder</i>..</a></li>
+      {% endif %}
+
+      {% for content in contents.content %}
+        {% if content.type == 'notebook' %}
+          <li class="bold">
+            <a class="sidenav-link" href="{{base_url}}voila/render/{{content.path}}"><i class="material-icons">book</i>{{content.name}}</a>
+          </li>
+        {% endif %}
+        {% if content.type == 'directory' %}
+          <li class="bold">
+            <a class="sidenav-link" href="{{base_url}}voila/tree/{{content.path}}"><i class="material-icons">folder</i>{{content.name}}</a>
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </header>
+{% endblock %}

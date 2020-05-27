@@ -4,3 +4,5 @@ jupyter labextension install jupyter-matplotlib
 jupyter nbextension      enable --py --sys-prefix appmode
 jupyter serverextension  enable --py --sys-prefix appmode
 jupyter nbextension      enable --py widgetsnbextension
+
+cp -r osscar /srv/conda/envs/notebook/share/jupyter/voila/templates/.

@@ -1,0 +1,7 @@
+{% extends "error.html" %}
+
+{% block body %}
+  {% call error_body(status_code, status_message) %}
+    <h2>You are requesting a page that does not exist!</h2>
+  {% endcall %}
+{% endblock %}
