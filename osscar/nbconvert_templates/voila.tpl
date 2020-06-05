@@ -9,10 +9,10 @@
 <link rel="stylesheet" href="https://unpkg.com/font-awesome@4.5.0/css/font-awesome.min.css" type="text/css">
 <link href="{{resources.base_url}}voila/static/index.css" rel="stylesheet" type='text/css'>
 {% if resources.theme == 'dark' %}
-{% set bar_color = '##fffb00' %}
+{% set bar_color = '#eee' %}
 <link href="{{resources.base_url}}voila/static/theme-dark.css" rel="stylesheet" type='text/css'>
 {% else %}
-{% set bar_color = '##fffb00' %}
+{% set bar_color = '#eee' %}
 <link href="{{resources.base_url}}voila/static/theme-light.css" rel="stylesheet" type='text/css'>
 {% endif %}
 <link href="{{resources.base_url}}voila/static/materialize.min.css" rel="stylesheet" type='text/css'>
@@ -128,6 +128,49 @@ button.red:active {
   font-family: sans-serif;
 }
 
+footer {
+  clear: both;
+  padding-top: 15px;
+  text-align: center;
+  cursor: default;
+  padding-bottom: 30px;
+}
+footer p {
+  color: #c1c1c1;
+  font-size: 11px;
+  padding: 4px 8px 4px 8px;
+  /*		background: #f7f7f7; */
+  /* 		background: rgba(0,0,0,0.04); */
+  display: inline;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-transition:color 0.2s ease-in, background 0.2s ease-in;
+  -moz-transition:color 0.2s ease-in, background 0.2s ease-in;
+  -o-transition:color 0.2s ease-in, background 0.2s ease-in;
+  transition:color 0.2s ease-in, background 0.2s ease-in;
+}
+footer p:hover {
+  background: #f1f1f1;
+  background: rgba(0,0,0,0.05);
+  color: #999;
+}
+
+footer div.logo-container {
+  display: inline-block;
+  height: 70px;
+  margin-top: 10px;
+}
+
+footer div.logo-container img {
+  max-height: 100%;
+  max-width: 120px;
+}
+
+footer div.logo-container ~ div.logo-container {
+  padding-left: 20px;
+}
+
 .spinner {
   animation: rotation 2s infinite linear;
   transform-origin: 50% 50%;
@@ -163,6 +206,7 @@ button.red:active {
   font-style: normal;
   font-size: 24px;
   line-height: 1;
+  color: #a10500;
   letter-spacing: normal;
   text-transform: none;
   display: inline-block;
@@ -225,7 +269,7 @@ a.anchor-link {
     </div>
   </header>
 
-  <main style="background-color:#e6e6e6">
+  <main style="background-color: white">
     <div class="container">
       <div class="row">
         <div class="col s12" id="col_s12" style="margin-bottom: 30px">
@@ -258,52 +302,62 @@ a.anchor-link {
               <div id="rendered_cells" style="display: none">
               </div>
             </div>
-            <hr style="border-top: 3px solid #8c8b8b;">
-            <a style="left: 10%" href="https://www.osscar.org/">Open Software Services for Classrooms and Research – An Open Science Educational Hub</a>
-          </div>
-        </div>
-      </main>
 
-      {%- block body_footer -%}
+            <hr style="border-top: 0.5px solid #cccccc;">
+            <footer class="container">
+              <p>Copyright © 2019-2020 OSSCAR. All Rights Reserved.
+                <br>
+                OSSCAR is supported by the <a href="https://www.osscar.org">EPFL Open Science Fund.</a>
+                <br>
+                <div class="logo-container">
+                  <a href="https://www.osscar.org/"><img src="{{ resources.base_url }}voila/static/osscar_logo.svg"></a>
+                </div>
+                <p></p>
+              </footer>
+            </div>
+          </div>
+        </main>
+
+        {%- block body_footer -%}
+        <script type="text/javascript">
+        (function() {
+          // remove the loading element
+          var el = document.getElementById("loading")
+          el.parentNode.removeChild(el)
+          // show the cell output
+          el = document.getElementById("rendered_cells")
+          el.style.display = 'unset'
+        })();
+        </script>
+
+        <script src="{{resources.base_url}}voila/static/materialize.min.js"></script>
+      </body>
+      {%- endblock body_footer -%}
+
+      {% block footer_js %}
+      {{ super() }}
+
       <script type="text/javascript">
-      (function() {
-        // remove the loading element
-        var el = document.getElementById("loading")
-        el.parentNode.removeChild(el)
-        // show the cell output
-        el = document.getElementById("rendered_cells")
-        el.style.display = 'unset'
-      })();
+
+      requirejs(['static/voila'], function(voila) {
+        (async function() {
+          var kernel = await voila.connectKernel();
+
+          kernel.statusChanged.connect(() => {
+            // console.log(kernel.status);
+            var el = document.getElementById("kernel-status-icon");
+
+            if (kernel.status == 'busy') {
+              el.innerHTML = 'radio_button_checked';
+            } else {
+              el.innerHTML = 'radio_button_unchecked';
+            }
+          });
+        })();
+      });
+
       </script>
 
-      <script src="{{resources.base_url}}voila/static/materialize.min.js"></script>
-    </body>
-    {%- endblock body_footer -%}
+      {% endblock footer_js %}
 
-    {% block footer_js %}
-    {{ super() }}
-
-    <script type="text/javascript">
-
-    requirejs(['static/voila'], function(voila) {
-      (async function() {
-        var kernel = await voila.connectKernel();
-
-        kernel.statusChanged.connect(() => {
-          // console.log(kernel.status);
-          var el = document.getElementById("kernel-status-icon");
-
-          if (kernel.status == 'busy') {
-            el.innerHTML = 'radio_button_checked';
-          } else {
-            el.innerHTML = 'radio_button_unchecked';
-          }
-        });
-      })();
-    });
-
-    </script>
-
-    {% endblock footer_js %}
-
-    {%- endblock body -%}
+      {%- endblock body -%}
