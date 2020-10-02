@@ -17,9 +17,8 @@ Schrödinger equation.
 | SOFT | Split operator Fourier transform method | [SOFT](./notebook/soft_intro.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/osscar-org/Quantum-Mechanics/develop?urlpath=%2Fvoila%2Frender%2Fnotebook%2Fsoft_intro.ipynb) |
 
 
-## Acknowlegements
+# Acknowledgements
 
-We acknowledge support from:
-* EPFL Open Science Fund
+We acknowledge support from the EPFL Open Science Fund via the [OSSCAR](http://www.osscar.org) project.
 
-<img src='http://www.osscar.org/wp-content/uploads/2019/03/OSSCAR-logo.png' width='240'>
+<img src='http://www.osscar.org/wp-content/uploads/2019/03/OSSCAR-logo.png' width='230'>
