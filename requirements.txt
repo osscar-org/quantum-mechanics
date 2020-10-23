@@ -4,5 +4,5 @@ numpy==1.18.3
 voila==0.2.3 
 ipympl==0.5.6
 scipy==1.4.1 
-voila-osscar-template==0.2.5
+voila-osscar-template==0.2.6
 widget_code_input==1.0.1
