@@ -1,1 +1,1 @@
-web: jupyter notebook notebook/index.ipynb --config=./jupyter_notebook_config.py --ip 0.0.0.0 --port $PORT
+web: voila --template=osscar enable_nbextensions=true notebook/index.ipynb --port=$PORT --no-browser 
