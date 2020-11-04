@@ -3,5 +3,6 @@
     "enable_nbextensions": true,  
     "theme": "light",
     "template": "osscar"
-  }
+  },
+  "shutdown_no_activity_timeout": 60
 }
