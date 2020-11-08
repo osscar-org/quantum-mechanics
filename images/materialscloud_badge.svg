@@ -7,11 +7,11 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="109"
-   height="20"
+   width="103.90369"
+   height="19.993206"
    version="1.1"
    id="svg30"
-   sodipodi:docname="badge_logo.svg"
+   sodipodi:docname="materialscloud_badge.svg"
    inkscape:version="0.92.3 (2405546, 2018-03-11)">
   <metadata
      id="metadata36">
@@ -37,20 +37,33 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:window-width="2560"
-     inkscape:window-height="1392"
+     inkscape:window-height="1337"
      id="namedview32"
      showgrid="false"
      inkscape:zoom="13.504587"
-     inkscape:cx="51.450422"
-     inkscape:cy="7.5622699"
-     inkscape:window-x="2560"
-     inkscape:window-y="0"
+     inkscape:cx="54.474063"
+     inkscape:cy="10.202244"
+     inkscape:window-x="0"
+     inkscape:window-y="55"
      inkscape:window-maximized="1"
      inkscape:current-layer="svg30"
      fit-margin-top="0"
      fit-margin-left="0"
      fit-margin-right="0"
-     fit-margin-bottom="0" />
+     fit-margin-bottom="0"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:bbox-nodes="true"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:snap-bbox-midpoints="true"
+     showguides="true"
+     inkscape:guide-bbox="true">
+    <sodipodi:guide
+       position="-8.6770006,-14.157483"
+       orientation="1,0"
+       id="guide879"
+       inkscape:locked="false" />
+  </sodipodi:namedview>
   <linearGradient
      id="b"
      x2="0"
@@ -80,24 +93,18 @@
        y="0"
        style="fill:#ffffff" />
   </clipPath>
-  <path
-     style="fill:#555555;stroke-width:0.69611526"
-     inkscape:connector-curvature="0"
-     id="path10"
-     d="M 0,0 H 31.012892 V 20 H 0 Z" />
-  <path
-     style="fill:#d21f15;fill-opacity:1;stroke-width:1.31645238"
-     inkscape:connector-curvature="0"
-     id="path12"
-     d="M 31.012892,0 H 109 V 20 H 31.012892 Z" />
-  <path
-     inkscape:connector-curvature="0"
-     style="fill:url(#b)"
-     id="path14"
-     d="M 0,1.3e-7 H 109 V 20 H 0 Z" />
+  <rect
+     style="opacity:1;fill:#333333;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers"
+     id="rect883"
+     width="25.075888"
+     height="19.993206"
+     x="0"
+     y="0"
+     rx="0"
+     ry="0" />
   <g
      id="g875"
-     transform="matrix(0.27102053,0,0,0.27102053,8.0702082,-270.97069)">
+     transform="matrix(0.27102053,0,0,0.27102053,5.6873652,-270.96335)">
     <g
        id="g873"
        transform="matrix(1.1533,0,0,1.1557,-379.09,391.21)">
@@ -177,16 +184,21 @@
       </g>
     </g>
   </g>
+  <path
+     style="opacity:1;fill:#d21f15;fill-opacity:1;stroke:none;stroke-width:0.94514775;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers"
+     d="m 25.075887,0.00742985 v 5.58563005 8.8145181 5.585629 h 4.059751 12.171361 58.536958 c 2.249603,0 4.059733,-2.491222 4.059733,-5.585629 V 5.5930599 c 0,-3.094407 -1.81013,-5.58563005 -4.059733,-5.58563005 H 41.306999 29.135638 Z"
+     id="rect842"
+     inkscape:connector-curvature="0" />
   <text
      xml:space="preserve"
      style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.37888336px;line-height:1.25;font-family:'times new roman';-inkscape-font-specification:'times new roman, ';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.10170817"
-     x="32.789791"
-     y="14.382731"
+     x="28.555723"
+     y="14.390075"
      id="text904"><tspan
        sodipodi:role="line"
        id="tspan902"
-       x="32.789791"
-       y="14.382731"
+       x="28.555723"
+       y="14.390075"
        style="font-size:11.75155354px;stroke-width:1.10170817">Materials<tspan
    style="font-size:11.75155354px;fill:#ececec;stroke-width:1.10170817"
    id="tspan906">Cloud</tspan></tspan></text>
