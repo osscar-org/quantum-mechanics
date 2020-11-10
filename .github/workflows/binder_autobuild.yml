@@ -10,5 +10,5 @@ jobs:
     steps:
       - uses: s-weigand/trigger-mybinder-build@v1.0.4
         with:
-          target-repo: osscar-org/Quantum-Mechanics 
+          target-repo: osscar-org/Quantum-Mechanics/develop 
           service-name: gh 
