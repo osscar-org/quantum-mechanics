@@ -1,3 +1,5 @@
+pip==21.0.1
+git+https://github.com/dou-du/voila@develop
 matplotlib==3.3.3
 numpy==1.18.5
 osscar-voila==0.2.6
