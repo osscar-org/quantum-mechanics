@@ -3,6 +3,6 @@ numpy==1.18.5
 git+https://github.com/dou-du/voila@master 
 ipympl==0.5.8
 scipy==1.5.4 
-voila-osscar-template==0.2.8
+voila-osscar-template==0.2.9
 Cython==0.29.21
 sympy==1.7.1
