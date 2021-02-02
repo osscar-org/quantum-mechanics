@@ -1,6 +1,6 @@
 matplotlib==3.3.3
 numpy==1.18.5
-git+https://github.com/dou-du/voila@master 
+osscar-voila==0.2.6
 ipympl==0.5.8
 scipy==1.5.4 
 voila-osscar-template==0.2.9
