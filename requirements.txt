@@ -9,3 +9,4 @@ scipy==1.5.4
 voila-osscar-template==0.2.9
 Cython==0.29.21
 sympy==1.7.1
+material-slider
