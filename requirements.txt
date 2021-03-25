@@ -2,7 +2,7 @@ pip==21.0.1
 voila==0.2.7
 git+https://github.com/dou-du/voila@develop
 matplotlib==3.3.4
-numpy==1.20.1
+numpy==1.19.5
 ipympl==0.5.8
 scipy==1.6.2 
 voila-osscar-template==0.2.9
