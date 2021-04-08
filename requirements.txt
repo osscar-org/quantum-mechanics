@@ -12,4 +12,4 @@ ase==3.21.1
 seekpath==2.0.1
 widget-bzvisualizer==0.1.0a3
 plotly==4.14.3
-pandas==1.2.3
+pandas
