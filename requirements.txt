@@ -1,5 +1,4 @@
 pip==21.0.1
-ipywidgets==7.6.3
 voila==0.2.9
 matplotlib==3.3.4
 numpy==1.19.5
