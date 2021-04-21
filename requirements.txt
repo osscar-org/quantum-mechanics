@@ -1,5 +1,4 @@
 pip==21.0.1
-voila==0.2.9
 git+https://github.com/dou-du/voila.git@develop
 matplotlib==3.3.4
 numpy==1.19.5
