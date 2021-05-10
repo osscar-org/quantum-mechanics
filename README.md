@@ -19,6 +19,13 @@ Schrödinger equation.
 | Shooting method | Shooting method with Numerov algorithm | [Shooting method](./notebook/shooting_method.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/osscar-org/quantum-mechanics/develop?urlpath=%2Fvoila%2Frender%2Fnotebook%2Fshooting_method.ipynb) | [![Materials Cloud Tool osscar-qmcourse](https://raw.githubusercontent.com/materialscloud-org/mcloud-badge/main/badges/img/mcloud_badge_tools.svg)](https://osscar-quantum-mechanics.materialscloud.io/voila/render/shooting_method.ipynb) |
 | SOFT | Split operator Fourier transform method | [SOFT](./notebook/soft_intro.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/osscar-org/quantum-mechanics/develop?urlpath=%2Fvoila%2Frender%2Fnotebook%2Fsoft_intro.ipynb) | [![Materials Cloud Tool osscar-qmcourse](https://raw.githubusercontent.com/materialscloud-org/mcloud-badge/main/badges/img/mcloud_badge_tools.svg)](https://osscar-quantum-mechanics.materialscloud.io/voila/render/soft_intro.ipynb) |
 
+### Section 2: Band Theory of Crystals
+
+Here are the tutorials to demonstrate the band theory of crystal systems.
+
+| Name       | Description           | Notebook links  | Binder | Materials Cloud | 
+| ------------- |:-------------:| -----:| -----:| -----:|
+| Pseudopotentials | Norm-conserving pseudopotentials | [Pseudopotentials](./notebook/pseudopotential.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/osscar-org/quantum-mechanics/develop?urlpath=%2Fvoila%2Frender%2Fnotebook%2Fpseudopotential.ipynb) | [![Materials Cloud Tool osscar-qmcourse](https://raw.githubusercontent.com/materialscloud-org/mcloud-badge/main/badges/img/mcloud_badge_tools.svg)](https://osscar-quantum-mechanics.materialscloud.io/voila/render/pseudopotential.ipynb) |
 
 # Acknowledgements
 
