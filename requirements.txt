@@ -1,5 +1,6 @@
 pip==21.0.1
-git+https://github.com/dou-du/voila.git@osscar
+voila==0.2.10
+osscar-voila==0.2.10.a4
 matplotlib==3.3.4
 numpy==1.19.5
 ipympl==0.5.8
