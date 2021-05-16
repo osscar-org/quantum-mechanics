@@ -1,4 +1,5 @@
 pip==21.0.1
+voila==0.2.10
 osscar-voila==0.2.10a3
 matplotlib==3.3.4
 numpy==1.19.5
