@@ -27,6 +27,15 @@ Here are the tutorials to demonstrate the band theory of crystal systems.
 | ------------- |:-------------:| -----:| -----:| -----:|
 | Pseudopotentials | Norm-conserving pseudopotentials | [Pseudopotentials](./notebook/band-theory/pseudopotential.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/osscar-org/quantum-mechanics/develop?urlpath=%2Fvoila%2Frender%2Fnotebook%2Fband-theory%2Fpseudopotential.ipynb) | [![Materials Cloud Tool osscar-qmcourse](https://raw.githubusercontent.com/materialscloud-org/mcloud-badge/main/badges/img/mcloud_badge_tools.svg)](https://osscar-quantum-mechanics.matcloud.xyz/voila/render/band-theory/pseudopotential.ipynb) |
 
+### Section 3: Statistical Mechanics
+
+| Name       | Description           | Notebook links  | Binder | Materials Cloud | 
+| ------------- |:-------------:| -----:| -----:| -----:|
+| Metropolis Monte Carlo | Metropolis-Hastings Monte Carlo | [Metropolis Monte Carlo](./notebook/statistical-mechanics/monte_carlo_parabolic.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/osscar-org/quantum-mechanics/develop?urlpath=%2Fvoila%2Frender%2Fnotebook%2Fstatistical-mechanics%2Fmonte_carlo_parabolic.ipynb) | [![Materials Cloud Tool osscar-qmcourse](https://raw.githubusercontent.com/materialscloud-org/mcloud-badge/main/badges/img/mcloud_badge_tools.svg)](https://osscar-quantum-mechanics.matcloud.xyz/voila/render/statistical-mechanics/monte_carlo_parabolic.ipynb) |
+| Monte Carlo Integration | Monte Carlo Integration | [Metropolis Monte Carlo](./notebook/statistical-mechanics/monte_carlo_pi.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/osscar-org/quantum-mechanics/develop?urlpath=%2Fvoila%2Frender%2Fnotebook%2Fstatistical-mechanics%2Fmonte_carlo_pi.ipynb) | [![Materials Cloud Tool osscar-qmcourse](https://raw.githubusercontent.com/materialscloud-org/mcloud-badge/main/badges/img/mcloud_badge_tools.svg)](https://osscar-quantum-mechanics.matcloud.xyz/voila/render/statistical-mechanics/monte_carlo_pi.ipynb) |
+| Ising Model | Ising Model | [Metropolis Monte Carlo](./notebook/statistical-mechanics/ising_model.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/osscar-org/quantum-mechanics/develop?urlpath=%2Fvoila%2Frender%2Fnotebook%2Fstatistical-mechanics%2Fising_model.ipynb) | [![Materials Cloud Tool osscar-qmcourse](https://raw.githubusercontent.com/materialscloud-org/mcloud-badge/main/badges/img/mcloud_badge_tools.svg)](https://osscar-quantum-mechanics.matcloud.xyz/voila/render/statistical-mechanics/ising_model.ipynb) |
+
+
 # Acknowledgements
 
 We acknowledge support from the EPFL Open Science Fund via the [OSSCAR](http://www.osscar.org) project.
