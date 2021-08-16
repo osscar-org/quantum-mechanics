@@ -5,7 +5,7 @@ matplotlib==3.3.4
 numpy==1.19.5
 ipympl==0.5.8
 scipy==1.5.4 
-voila-osscar-template==0.2.9
+voila-osscar-template==0.2.10
 Cython==0.29.22
 sympy==1.7.1
 ase==3.21.1
