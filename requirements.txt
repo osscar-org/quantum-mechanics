@@ -8,7 +8,7 @@ scipy==1.7.1
 voila-osscar-template==0.2.10
 Cython==0.29.24
 sympy==1.8
-ase==3.21.1
+ase==3.22.0
 seekpath==2.0.1
 widget-bzvisualizer==0.1.0b4
 plotly==5.2.2
