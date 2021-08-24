@@ -10,7 +10,7 @@ Cython==0.29.24
 sympy==1.8
 ase==3.21.1
 seekpath==2.0.1
-widget-bzvisualizer==0.1.0a4
+widget-bzvisualizer==0.1.0b4
 plotly==4.14.3
 pandas
 nglview==3.0.1
