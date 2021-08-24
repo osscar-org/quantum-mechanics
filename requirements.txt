@@ -13,4 +13,4 @@ seekpath==2.0.1
 widget-bzvisualizer==0.1.0a4
 plotly==4.14.3
 pandas
-nglview==3.0.1
+nglview==3.0.3
