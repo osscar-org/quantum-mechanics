@@ -7,7 +7,7 @@ ipympl==0.5.8
 scipy==1.7.1 
 voila-osscar-template==0.2.10
 Cython==0.29.22
-sympy==1.7.1
+sympy==1.8
 ase==3.21.1
 seekpath==2.0.1
 widget-bzvisualizer==0.1.0a4
