@@ -8,8 +8,8 @@ jobs:
   trigger-binder-build:
     runs-on: [ubuntu-latest]
     steps:
-      - uses: s-weigand/trigger-mybinder-build@v1.0.4
+      - uses: s-weigand/trigger-mybinder-build@v1.1.0
         with:
-          target-repo: osscar-org/Quantum-Mechanics  
+          target-repo: osscar-org/quantum-mechanics  
           service-name: gh 
           target-state: develop 
