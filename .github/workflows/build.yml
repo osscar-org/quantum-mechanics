@@ -1,0 +1,43 @@
+name: Build
+
+on:
+  push:
+    branches: '*'
+  pull_request:
+    branches: '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Install node
+      uses: actions/setup-node@v1
+      with:
+       node-version: '15.x'
+    - name: Install Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+        architecture: 'x64'
+    - name: Install dependencies
+      run: pip install -i requirements.txt
+
+    - uses: browser-actions/setup-chrome@latest
+    - run: chrome --version
+      with:
+        chrome-version: stable
+    - name: Run the voila server
+      run: |
+        voila --template=osscar --enable_nbextensions=True notebook/ --port 8383 &
+        pip install --upgrade pytest
+        pip install --upgrade selenium
+        cd test
+        python test.py
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: quantum-screenshot
+        path: 1quantumwell.png
+
