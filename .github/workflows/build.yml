@@ -22,7 +22,7 @@ jobs:
         python-version: '3.8'
         architecture: 'x64'
     - name: Install dependencies
-      run: pip install -i requirements.txt
+      run: pip install -r requirements.txt
 
     - uses: browser-actions/setup-chrome@latest
     - run: chrome --version
