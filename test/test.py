@@ -12,7 +12,7 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 class TestTest01():
   def setup_method(self, method):
-    self.driver = webdriver.Chrome('./chromedriver')
+    self.driver = webdriver.Chrome()
     self.vars = {}
   
   def teardown_method(self, method):
