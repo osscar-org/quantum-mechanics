@@ -26,8 +26,6 @@ jobs:
 
     - uses: browser-actions/setup-chrome@latest
     - run: chrome --version
-      with:
-        chrome-version: stable
     - name: Run the voila server
       run: |
         voila --template=osscar --enable_nbextensions=True notebook/ --port 8383 &
