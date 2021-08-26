@@ -43,5 +43,5 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: quantum-screenshot
-        path: 1quantumwell.png
+        path: *.png
 
