@@ -21,6 +21,7 @@ class TestTest01():
   def test_test01(self):
     self.driver.get("http://localhost:8383/voila/render/index.ipynb")
     self.driver.set_window_size(1280, 720)
+    self.driver.save_screenshot("index.png")
     self.driver.find_element(By.LINK_TEXT, "Numerical Solution of the Schrödinger Equation for 1D Quantum Well").click()
     time.sleep(5)
     self.driver.execute_script("window.scrollTo(0, 1000)")
