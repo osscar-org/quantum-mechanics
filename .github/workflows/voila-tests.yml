@@ -7,7 +7,7 @@ on:
     branches: '*'
 
 jobs:
-  build:
+  voila:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
