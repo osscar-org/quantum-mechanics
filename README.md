@@ -1,6 +1,11 @@
-# Quantum Mechanics and Computational Materials Science
+# **Interactive Notebooks: Quantum Mechanics and Computational Materials Science**
 
-**description**: This is a repository for tutorials in quantum mechanics and computational materials science.
+**description**: This is a repository for tutorials in quantum mechanics and
+computational materials science. Jupyter notebooks are converted into
+interactive web applications. Professors can use them to demonstrate knowledge
+in the classroom. Students can also use them for self-learning.
+
+![example](./images/examples.png)
 
 * Try on `Materials Cloud` (fast, a few seconds to load) [![Materials Cloud Tool osscar-qmcourse](https://raw.githubusercontent.com/materialscloud-org/mcloud-badge/main/badges/img/mcloud_badge_tools.svg)](https://osscar-quantum-mechanics.matcloud.xyz)
 
@@ -35,6 +40,12 @@ Here are the tutorials to demonstrate the band theory of crystal systems.
 | Monte Carlo Integration | Monte Carlo Integration | [Monte Carlo Integration](./notebook/statistical-mechanics/monte_carlo_pi.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/osscar-org/quantum-mechanics/develop?urlpath=%2Fvoila%2Frender%2Fnotebook%2Fstatistical-mechanics%2Fmonte_carlo_pi.ipynb) | [![Materials Cloud Tool osscar-qmcourse](https://raw.githubusercontent.com/materialscloud-org/mcloud-badge/main/badges/img/mcloud_badge_tools.svg)](https://osscar-quantum-mechanics.matcloud.xyz/voila/render/statistical-mechanics/monte_carlo_pi.ipynb) |
 | Ising Model | Ising Model | [Ising Model](./notebook/statistical-mechanics/ising_model.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/osscar-org/quantum-mechanics/develop?urlpath=%2Fvoila%2Frender%2Fnotebook%2Fstatistical-mechanics%2Fising_model.ipynb) | [![Materials Cloud Tool osscar-qmcourse](https://raw.githubusercontent.com/materialscloud-org/mcloud-badge/main/badges/img/mcloud_badge_tools.svg)](https://osscar-quantum-mechanics.matcloud.xyz/voila/render/statistical-mechanics/ising_model.ipynb) |
 
+
+### Section 4: Molecular Dynamics
+
+| Name       | Description           | Notebook links  | Binder | Materials Cloud | 
+| ------------- |:-------------:| -----:| -----:| -----:|
+| Verlet Integration | Verlet integration | [Verlet Integration](./notebook/molecular-dynamics/verlet_integration.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/osscar-org/quantum-mechanics/develop?urlpath=%2Fvoila%2Frender%2Fnotebook%2Fmolecular-dynamics%2Fverlet_integration.ipynb) | [![Materials Cloud Tool osscar-qmcourse](https://raw.githubusercontent.com/materialscloud-org/mcloud-badge/main/badges/img/mcloud_badge_tools.svg)](https://osscar-quantum-mechanics.matcloud.xyz/voila/render/molecular-dynamics/verlet_integration.ipynb) |
 
 # Acknowledgements
 
