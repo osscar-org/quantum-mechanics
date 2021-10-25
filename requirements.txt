@@ -1,4 +1,4 @@
-pip==21.3
+pip==21.3.1
 voila==0.2.16
 osscar-voila==0.2.10.a6
 matplotlib==3.4.3
