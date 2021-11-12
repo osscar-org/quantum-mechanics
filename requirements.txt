@@ -3,7 +3,7 @@ voila==0.2.16
 matplotlib==3.4.3
 numpy==1.21.4
 ipympl==0.8.0
-scipy==1.7.1 
+scipy==1.7.2 
 voila-osscar-template==0.2.12
 Cython==0.29.24
 sympy==1.9
