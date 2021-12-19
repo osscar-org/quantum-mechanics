@@ -5,7 +5,7 @@ numpy==1.21.4
 ipympl==0.8.0
 scipy==1.7.3 
 voila-osscar-template==0.2.12
-Cython==0.29.25
+Cython==0.29.26
 sympy==1.9
 ase==3.22.1
 seekpath==2.0.1
