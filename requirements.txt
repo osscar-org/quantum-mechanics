@@ -1,5 +1,5 @@
 pip==21.3.1
-voila==0.3.0
+voila==0.2.16
 matplotlib==3.5.1
 numpy==1.22.0
 ipympl==0.8.5
