@@ -1,11 +1,11 @@
 pip==21.3.1
 voila==0.3.1
 matplotlib==3.3.4
-numpy==1.22.1
+numpy==1.22.2
 ipympl==0.8.7
 scipy==1.7.3 
 voila-osscar-template==0.2.12
-Cython==0.29.26
+Cython==0.29.27
 sympy==1.9
 ase==3.22.1
 seekpath==2.0.1
