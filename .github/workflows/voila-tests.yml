@@ -1,0 +1,47 @@
+name: VoilaTest
+
+on:
+  push:
+    branches: '*'
+  pull_request:
+    branches: '*'
+
+jobs:
+  voila:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Install node
+      uses: actions/setup-node@v1
+      with:
+       node-version: '15.x'
+    - name: Install Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+        architecture: 'x64'
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+
+    - name: Run the voila server
+      run: |
+        voila --template=osscar --enable_nbextensions=True notebook/ --port 8383 --no-browser &
+        pip install --upgrade pytest
+        pip install --upgrade selenium
+
+    - uses: nanasess/setup-chromedriver@master
+      with:
+        # Optional: do not specify to match Chrome's version
+        chromedriver-version: '96.0.4664.45'
+    - run: |
+        export DISPLAY=:99
+        chromedriver --url-base=/wd/hub &
+        sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 & # optional
+        python3 $GITHUB_WORKSPACE/test/test.py
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: quantum-screenshot
+        path: './*.png'
+
