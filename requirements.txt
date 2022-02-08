@@ -1,9 +1,9 @@
-pip==21.3.1
+pip==22.0.3
 voila==0.3.1
 matplotlib==3.3.4
 numpy==1.22.2
 ipympl==0.8.7
-scipy==1.7.3 
+scipy==1.8.0 
 voila-osscar-template==0.3.1
 Cython==0.29.27
 sympy==1.9
