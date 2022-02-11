@@ -1,5 +1,5 @@
 # **Interactive Notebooks: Quantum Mechanics and Computational Materials Science**
-[![Build](https://github.com/osscar-org/quantum-mechanics/actions/workflows/voila-tests.yml/badge.svg?branch=develop)](https://github.com/osscar-org/quantum-mechanics/actions/workflows/voila-tests.yml)
+[![Build](https://github.com/osscar-org/quantum-mechanics/actions/workflows/voila-tests.yml/badge.svg?branch=master)](https://github.com/osscar-org/quantum-mechanics/actions/workflows/voila-tests.yml)
 
 **Introduction**: This is a repository for tutorials in quantum mechanics and
 computational materials science. Jupyter notebooks are converted into
