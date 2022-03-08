@@ -1,4 +1,4 @@
-pip==22.0.3
+pip==22.0.4
 voila==0.3.2
 matplotlib==3.3.4
 numpy==1.22.2
