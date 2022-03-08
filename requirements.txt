@@ -1,12 +1,12 @@
-pip==22.0.3
+pip==22.0.4
 voila==0.3.2
 matplotlib==3.3.4
-numpy==1.22.2
-ipympl==0.8.7
+numpy==1.22.3
+ipympl==0.8.8
 scipy==1.8.0 
 voila-osscar-template==0.3.2
 Cython==0.29.28
-sympy==1.9
+sympy==1.10
 ase==3.22.1
 seekpath==2.0.1
 widget-bzvisualizer==0.1.0b5
