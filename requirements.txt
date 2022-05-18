@@ -10,6 +10,6 @@ sympy==1.10.1
 ase==3.22.1
 seekpath==2.0.1
 widget-bzvisualizer==0.1.0b8
-plotly==5.7.0
+plotly==5.8.0
 pandas==1.4.2
 nglview==3.0.3
