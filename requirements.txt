@@ -1,7 +1,7 @@
 pip==22.1.1
 voila==0.3.5
 matplotlib==3.5.2
-numpy==1.22.3
+numpy==1.22.4
 ipympl==0.9.1
 scipy==1.8.1 
 voila-osscar-template==0.3.2
