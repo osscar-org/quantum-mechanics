@@ -1,0 +1,27 @@
+name: Deploy on Materials Cloud dokku development server
+
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'Deploy on MC dev. dokku'
+        required: true
+        default: 'Deploy on dev. dokku'
+  push:
+    branches:
+      - develop
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cloning repo
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Push to dokku
+        uses: dokku/github-action@master
+        with:
+          git_remote_url: 'ssh://dokku@matcloud.xyz:22/osscar-quantum-mechanics'
+          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
