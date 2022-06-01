@@ -54,4 +54,4 @@ Here are the tutorials to demonstrate the band theory of crystal systems.
 
 We acknowledge support from the EPFL Open Science Fund via the [OSSCAR](http://www.osscar.org) project.
 
-<img src='http://www.osscar.org/wp-content/uploads/2019/03/OSSCAR-logo.png' width='230'>
+<img src='https://www.osscar.org/_images/logos.png' width='700'>
