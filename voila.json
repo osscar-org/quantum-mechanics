@@ -1,8 +1,8 @@
 {
     "VoilaConfiguration": {
+        "template": "osscar",
         "enable_nbextensions": true
     },
-    "template": "osscar",
     "VoilaExecutePreprocessor": {
         "timeout": 180
     },
