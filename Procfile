@@ -1,1 +1,1 @@
-web: voila --Voila.ip=0.0.0.0 --template=osscar --VoilaConfiguration.enable_nbextensions=True notebook/ --port=$PORT --no-browser --MappingKernelManager.cull_interval=60 --MappingKernelManager.cull_idle_timeout=120 --MappingKernelManager.cull_busy=True 
+web: voila --Voila.ip=0.0.0.0 --template=osscar --preheat_kernel=True --pool_size=5 --VoilaConfiguration.enable_nbextensions=True notebook/ --port=$PORT --no-browser --MappingKernelManager.cull_interval=60 --MappingKernelManager.cull_idle_timeout=120 --MappingKernelManager.cull_busy=True
