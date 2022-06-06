@@ -199,7 +199,7 @@ class NGLMolecule(NGLWidgets):
             # To avoid molecule change on tick
             molecule = self.dropdown_molecule.value
             idx = np.argwhere(np.array(self.advanced_molecules) == molecule)
-            self.advanced_molecules.pop(59)
+            self.advanced_molecules.pop(int(idx))
             self.advanced_molecules.insert(0, molecule)
 
             self.dropdown_molecule.options = self.advanced_molecules
