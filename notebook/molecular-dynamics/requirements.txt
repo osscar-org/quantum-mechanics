@@ -1,0 +1,12 @@
+pip
+matplotlib
+numpy
+ipympl
+ipywidgets
+scipy
+ase
+nglview
+moviepy
+ipyevents
+IPython
+sympy
