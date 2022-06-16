@@ -20,12 +20,16 @@ class NGLMolecule(NGLWidgets):
     def __init__(self, trajectory) -> None:
         super().__init__(trajectory)
 
-        self.output_summary = widgets.Output()
+        # Folder in which vibrations data will be saved
         self.folder = os.path.join(self.tmp_dir.name, "vibrations")
-        # Molecules
+
+        ### Molecules
+
+        # Slider for vibrational mode selection
         self.slider_mode_description = widgets.HTMLMath(
             r"Vibrational mode", layout=self.layout_description
         )
+        # Here we don't use IntSlide to show also the total number of rotations
         self.slider_mode = widgets.SelectionSlider(
             options=["1/1"],
             value="1/1",
@@ -35,7 +39,9 @@ class NGLMolecule(NGLWidgets):
             layout=self.layout,
             readout=True,
         )
+        self.slider_mode.observe(self.modify_molecule, "value")
 
+        # Molecular vibration amplitude
         self.slider_amplitude_description = widgets.HTMLMath(
             r"Temperature [K]", layout=self.layout_description
         )
@@ -44,11 +50,12 @@ class NGLMolecule(NGLWidgets):
             min=10,
             max=1000,
             step=10,
-            # description="Temperature [K]",
             continuous_update=False,
             layout=self.layout,
         )
+        self.slider_amplitude.observe(self.modify_molecule, "value")
 
+        # Molecule selection
         self.dropdown_molecule_description = widgets.HTMLMath(
             r"Molecule", layout=self.layout_description
         )
@@ -64,32 +71,55 @@ class NGLMolecule(NGLWidgets):
                 "C\u2086H\u2086",
             ],
             value="O\u2082",
-            # description="Molecule:",
             disabled=False,
-            # style={"font_weight": "bold"},
             layout=self.layout,
         )
-
         self.dropdown_molecule.observe(self.change_molecule, "value")
-        self.slider_mode.observe(self.modify_molecule, "value")
-        self.slider_amplitude.observe(self.modify_molecule, "value")
 
-        self.representation = "ball+stick"
+        # Toggle advanced molecule list
+        self.button_advanced_molecule = widgets.Checkbox(
+            value=False, indent=False, layout=Layout(width="50px")
+        )
+        self.button_advanced_molecule_description = widgets.HTMLMath(
+            r"Extended list", layout=Layout(width="100px")
+        )
+        self.button_advanced_molecule.observe(self.on_molecule_list_change, "value")
 
+        ### Appearance
+        # Modify bond aspect ratio
         self.slider_aspect_ratio = widgets.FloatSlider(
-            value=2, min=1, max=3, step=0.1, layout=Layout(width="200px")
+            value=2, min=1, max=3, step=0.1, layout=self.layout
         )
         self.slider_aspect_ratio_description = HTMLMath(
             r"Aspect ratio", layout=self.layout_description
         )
         self.slider_aspect_ratio.observe(self.modify_representation, "value")
 
+        # Toggle atom label
+        self.tick_box_label_description=widgets.HTMLMath(value=r'Atoms label',layout=self.layout_description)
+        self.tick_box_label=widgets.Checkbox(value=False,layout=self.layout)
+        self.tick_box_label.observe(self.on_label_change,"value")
+        # To output summary table
+        self.output_summary = widgets.Output()
+        self.summary_energy=HTMLMath(
+            value="0",
+            layout=Layout(
+                width="130px", display="flex", justify_content="flex-end"
+            ),
+        )
+        self.summary_frequency=HTMLMath(
+                    value="0",
+                    layout=Layout(
+                        width="130px", display="flex", justify_content="flex-end"
+                    ),
+                )
+
         self.simple_molecules = [
             "O\u2082",
             "N\u2082",
             "OH",
             "H\u2082O",
-            "CO\u2082",
+            "CO\u2082"
             "CH\u2084",
             "NH\u2083",
             "C\u2086H\u2086",
@@ -172,49 +202,24 @@ class NGLMolecule(NGLWidgets):
             "biphenyl",
         ]
 
-        self.button_advanced_molecule = widgets.Checkbox(
-            value=False, indent=False, layout=Layout(width="50px")
-        )
-        self.button_advanced_molecule_description = widgets.HTMLMath(
-            r"Extended list", layout=Layout(width="100px")
-        )
-        self.button_advanced_molecule.observe(self.on_molecule_list_change, "value")
-        self.dropdown_molecule_advanced_description = widgets.HTMLMath(
-            r"Molecule", layout=self.layout_description
-        )
-        self.dropdown_molecule_advanced = widgets.Dropdown(
-            options=self.advanced_molecules,
-            value="O\u2082",
-            # description="Molecule:",
-            disabled=False,
-            # style={"font_weight": "bold"},
-            layout=self.layout,
-        )
-        self.dropdown_molecule_advanced.observe(self.change_molecule_advanced, "value")
-
         self.molecule_name = "O\u2082"
-
-    def on_molecule_list_change(self, *args):
-        if self.button_advanced_molecule.value == True:
-            # To avoid molecule change on tick
-            molecule = self.dropdown_molecule.value
-            idx = np.argwhere(np.array(self.advanced_molecules) == molecule)
-            self.advanced_molecules.pop(int(idx))
-            self.advanced_molecules.insert(0, molecule)
-
-            self.dropdown_molecule.options = self.advanced_molecules
-
-        else:
-            self.dropdown_molecule.options = self.simple_molecules
+        self.representation = "ball+stick"
 
     def addArrows(self, *args):
+        '''
+        Function to add arrow in the NGLViewer showing atoms displacements
+        '''
+        # Need to remove arrows first to avoid visual glitch
         self.removeArrows()
 
+        # Get the atom position to initialize arrows at correct position
         positions = list(self.traj[0].get_positions().flatten())
 
         n_atoms = int(len(positions) / 3)
         color = n_atoms * [0, 1, 0]
         radius = n_atoms * [0.1]
+
+        # Initialize arrows
         self.view._js(
             f"""
         var shape = new NGL.Shape("my_shape")
@@ -232,100 +237,56 @@ class NGLMolecule(NGLWidgets):
         shapeComp.autoView()
         """
         )
+
         # Remove observe callable to avoid visual glitch
         if self.handler:
             self.view.unobserve(self.handler.pop(), names=["frame"])
 
+        # Get the highest amplitude to normalize all amplitudes
         scaling_factor = np.max(np.linalg.norm(self.steps[:, :, :, :], axis=2))
 
         def on_frame_change(change):
+            '''
+            Compute the new arrow position and orientations
+            '''
             frame = change["new"]
 
             positions = self.traj[frame].get_positions()
+            # Head of arrow position
             positions2 = (
                 positions
                 + self.steps[:, :, :, frame].reshape(-1, 3)
                 / scaling_factor
                 * self.slider_amp_arrow.value
             )
+            # JavaScript only reads lists from Python
             positions = list(positions.flatten())
             positions2 = list(positions2.flatten())
 
-            if self.tick_box_arrows.value:
-                radius = n_atoms * [self.slider_arrow_radius.value]
-                self.view._js(
-                    f"""
-                globalThis.arrowBuffer.setAttributes({{
-                position1: new Float32Array({positions}),
-                position2: new Float32Array({positions2}),
-                radius: new Float32Array({radius})
-                }})
-                
-                this.stage.viewer.requestRender()
-                """
-                )
-            else:
-                radius = n_atoms * [0.0]
-                self.view._js(
-                    f"""
-                globalThis.arrowBuffer.setAttributes({{
-                position1: new Float32Array({positions}),
-                position2: new Float32Array({positions}),
-                radius: new Float32Array({radius})
-                }})
-
-                this.stage.viewer.requestRender()
-                """
-                )
+            radius = n_atoms * [self.slider_arrow_radius.value]
+            # Update the arrows position
+            self.view._js(
+                f"""
+            globalThis.arrowBuffer.setAttributes({{
+            position1: new Float32Array({positions}),
+            position2: new Float32Array({positions2}),
+            radius: new Float32Array({radius})
+            }})
+            
+            this.stage.viewer.requestRender()
+            """
+            )
 
         self.view.observe(on_frame_change, names=["frame"])
+        # Keep in memory callable function to remove it later on
         self.handler.append(on_frame_change)
 
-    def modify_molecule(self, *args):
-        """
-        Example slider:
-            slider_amplitude=FloatSlider(value=300,min=10,max=1000,step=10,description='Temperature [K]',continuous_update=False)
-            slider_amplitude.observe(functools.partial(set_amplitude,view,slider))
-        """
-
-        time.sleep(0.2)
-
-        # self.molecule_name = ""
-        # for x in self.dropdown_molecule.value:
-        #     if ord(x) > 128:
-        #         # Retrieve number from unicode
-        #         self.molecule_name += chr(ord(x) - 8320 + 48)
-        #     else:
-        #         self.molecule_name += x
-
-        atoms = molecule(self.molecule_name, calculator=EMT())
-        vibname = os.path.join(self.folder, self.molecule_name)
-        vib = Vibrations(atoms, name=vibname)
-        # TODO : write in temporary file
-
-        mode = int(self.slider_mode.value[0])
-        T = self.slider_amplitude.value
-        vib.write_mode(n=self.idx[mode - 1], kT=kB * T, nimages=60)
-
-        traj = Trajectory(
-            os.path.join(
-                self.folder,
-                self.molecule_name + "." + str(self.idx[mode - 1]) + ".traj",
-            )
-        )
-
-        self.steps = np.zeros((len(traj[0].positions), 1, 3, 60))
-
-        for frame in range(len(traj)):
-            step = traj[frame].positions - traj[0].positions
-            self.steps[:, 0, :, frame] = step
-
-        self.replace_trajectory(traj=traj)
-
-        self.print_summary()
-
     def change_molecule(self, *args):
-        time.sleep(0.2)  # Time to get the dropdown value to update
+        """
+        Compute vibrational properties of molecule \n
+        Extract vibrational modes from rotations and translations
+        """
+        # Translate unicode characters from molecule to number
         self.molecule_name = ""
         for x in self.dropdown_molecule.value:
             if ord(x) > 128:
@@ -334,24 +295,25 @@ class NGLMolecule(NGLWidgets):
             else:
                 self.molecule_name += x
 
-        atoms = molecule(self.molecule_name, calculator=EMT())
+        
 
-        # Relax and get vibrational properties
+        # Initialize vibration
+        atoms = molecule(self.molecule_name, calculator=EMT())
         opt = BFGS(atoms, logfile=None)
         opt.run(fmax=0.001)
-
         vibname = os.path.join(self.folder, self.molecule_name)
         vib = Vibrations(atoms, name=vibname)
         vib.run()
 
         # Extract rotational motions
         ndofs = 3 * len(atoms)
-        is_not_linear = int(not (len(atoms) == 2 or atoms.get_angle(0, 1, 2) == 0))
+        # Check if diatomic or linear molecule
+        is_not_linear = int(not (len(atoms) == 2 or atoms.get_angle(0, 1, 2) == 0)) 
         nrotations = ndofs - 5 - is_not_linear
-        energies = np.absolute(vib.get_energies())
-        frequencies = np.absolute(vib.get_frequencies())
 
         # Get the nrotations-largest energies, to eliminate translation and rotation energies
+        energies = np.absolute(vib.get_energies())
+        frequencies = np.absolute(vib.get_frequencies())
         self.idx = np.argpartition(energies, -nrotations)[-nrotations:]
         self.energies = energies[self.idx]
         self.frequencies = frequencies[self.idx]
@@ -359,13 +321,54 @@ class NGLMolecule(NGLWidgets):
         max_val = len(self.idx)
         for i in range(1, max_val + 1):
             options.append(str(i) + "/" + str(max_val))
-        # self.slider_mode.max = len(self.idx) - 1
+
+        # Update available vibrational modes
         self.slider_mode.options = options
 
+        # Write currently selected mode vibration
         mode = int(self.slider_mode.value[0])
-
-        # TODO : write in temporary file
         T = self.slider_amplitude.value
+        vib.write_mode(n=self.idx[mode - 1], kT=kB * T, nimages=60)
+
+        # Get new trajectory
+        traj = Trajectory(
+            os.path.join(
+                self.folder,
+                self.molecule_name + "." + str(self.idx[mode - 1]) + ".traj",
+            )
+        )
+        self.replace_trajectory(traj=traj)
+
+        # Matrix to save the atoms displacements to compute arrows
+        self.steps = np.zeros((len(traj[0].positions), 1, 3, 60))
+        for frame in range(len(traj)):
+            step = traj[frame].positions - traj[0].positions
+            self.steps[:, 0, :, frame] = step
+
+        self.update_summary()
+
+        # To fix advanced molecules looking weird at first
+        # We update the view to reload it
+        if self.button_advanced_molecule.value==True:
+            self.slider_mode.value=self.slider_mode.options[-1]
+            self.slider_mode.value=self.slider_mode.options[0]
+
+    def modify_molecule(self, *args):
+        """
+        Rewrite vibrational mode with new temperature\n
+        |!\ Here we don't have to run the vibration again
+        as it has been computed before
+        """
+        # Initialize vibration
+        atoms = molecule(self.molecule_name, calculator=EMT())
+        vibname = os.path.join(self.folder, self.molecule_name)
+        vib = Vibrations(atoms, name=vibname)
+
+        # Select which mode to compute
+        mode = int(self.slider_mode.value[0])
+        
+        T = self.slider_amplitude.value
+        # Compute new vibration at different temperature
         vib.write_mode(n=self.idx[mode - 1], kT=kB * T, nimages=60)
 
         traj = Trajectory(
@@ -374,78 +377,50 @@ class NGLMolecule(NGLWidgets):
                 self.molecule_name + "." + str(self.idx[mode - 1]) + ".traj",
             )
         )
-        self.steps = np.zeros((len(traj[0].positions), 1, 3, 60))
 
+        # Matrix to save the atoms displacements to compute arrows
+        self.steps = np.zeros((len(traj[0].positions), 1, 3, 60))
         for frame in range(len(traj)):
             step = traj[frame].positions - traj[0].positions
             self.steps[:, 0, :, frame] = step
 
         self.replace_trajectory(traj=traj)
 
-        self.print_summary()
+        # Update frequency and energy values
+        self.update_summary()
 
-    def change_molecule_advanced(self, *args):
-        time.sleep(0.2)  # Time to get the dropdown value to update
-        self.molecule_name = ""
-        for x in self.dropdown_molecule_advanced.value:
-            if ord(x) > 128:
-                # Retrieve number from unicode
-                self.molecule_name += chr(ord(x) - 8320 + 48)
-            else:
-                self.molecule_name += x
+    def on_molecule_list_change(self, *args):
+        '''
+        Update molecule list choice
+        '''
+        if self.button_advanced_molecule.value == True:
+            # To avoid molecule change on tick
+            # We take current molecule name
+            # And put it at beginning of list
+            molecule = self.dropdown_molecule.value
+            idx = np.argwhere(np.array(self.advanced_molecules) == molecule)
+            self.advanced_molecules.pop(int(idx)) # To avoid duplication of name
+            self.advanced_molecules.insert(0, molecule)
 
-        atoms = molecule(self.molecule_name, calculator=EMT())
+            self.dropdown_molecule.options = self.advanced_molecules
 
-        # Relax and get vibrational properties
-        opt = BFGS(atoms, logfile=None)
-        opt.run(fmax=0.001)
+        else:
+            self.dropdown_molecule.options = self.simple_molecules
 
-        vibname = os.path.join(self.folder, self.molecule_name)
-        vib = Vibrations(atoms, name=vibname)
-        vib.run()
-
-        # Extract rotational motions
-        ndofs = 3 * len(atoms)
-        is_not_linear = int(not (len(atoms) == 2 or atoms.get_angle(0, 1, 2) == 0))
-        nrotations = ndofs - 5 - is_not_linear
-        energies = np.absolute(vib.get_energies())
-        frequencies = np.absolute(vib.get_frequencies())
-
-        # Get the nrotations-largest energies, to eliminate translation and rotation energies
-        self.idx = np.argpartition(energies, -nrotations)[-nrotations:]
-        self.energies = energies[self.idx]
-        self.frequencies = frequencies[self.idx]
-        options = []
-        max_val = len(self.idx)
-        for i in range(1, max_val + 1):
-            options.append(str(i) + "/" + str(max_val))
-        # self.slider_mode.max = len(self.idx) - 1
-        self.slider_mode.options = options
-
-        mode = int(self.slider_mode.value[0])
-
-        # TODO : write in temporary file
-        T = self.slider_amplitude.value
-        vib.write_mode(n=self.idx[mode - 1], kT=kB * T, nimages=60)
-
-        traj = Trajectory(
-            os.path.join(
-                self.folder,
-                self.molecule_name + "." + str(self.idx[mode - 1]) + ".traj",
-            )
-        )
-        self.steps = np.zeros((len(traj[0].positions), 1, 3, 60))
-
-        for frame in range(len(traj)):
-            step = traj[frame].positions - traj[0].positions
-            self.steps[:, 0, :, frame] = step
-
-        self.replace_trajectory(traj=traj)
-
-        self.print_summary()
+    def on_label_change(self,*args):
+        # https://github.com/nglviewer/nglview/issues/650
+        '''
+        Toggle atom label \n
+        '''
+        if self.tick_box_label.value ==True:
+            self.view.add_label(radius=1.5,label_type='atomname',color='black',opacity=0.7,attachment="middle-center")
+        else:
+            self.view.remove_label()
 
     def print_summary(self, *args):
-        mode = int(self.slider_mode.value[0])
+        """
+        Print out table of energy and frequency of vibrabtion
+        """
         with self.output_summary:
             self.output_summary.clear_output()
             titles = HBox(
@@ -465,21 +440,13 @@ class NGLMolecule(NGLWidgets):
                     ),
                 ]
             )
+
             values = HBox(
                 [
                     HTMLMath(value=1 * " ", layout=Layout(width="100px")),  # Spacer
-                    HTMLMath(
-                        value=f"{self.energies[mode-1]:>12.3f}",
-                        layout=Layout(
-                            width="130px", display="flex", justify_content="flex-end"
-                        ),
-                    ),
-                    HTMLMath(
-                        value=f"{self.frequencies[mode-1]:>12.0f}",
-                        layout=Layout(
-                            width="130px", display="flex", justify_content="flex-end"
-                        ),
-                    ),
+                    self.summary_energy,
+                    self.summary_frequency
+                    
                 ]
             )
             nota_bene = HBox(
@@ -492,18 +459,11 @@ class NGLMolecule(NGLWidgets):
                 ]
             )
             display(titles, values, nota_bene)
-            # print(f"{'Energy [meV]':>15}{'Frequency [cm$^-{1}$]':>25}")
-            # print(
-            #     f"{self.energies[mode-1]:>15.3f}{self.frequencies[mode-1]:>25.0f}"
-            # )
 
-    def change_mode(self, *args):
+    def update_summary(self,*args):
+        """
+        Update value of energy and frequency shown
+        """
         mode = int(self.slider_mode.value[0])
-        # molecule_name = self.molecule_name
-        traj = Trajectory(
-            os.path.join(
-                self.folder,
-                self.molecule_name + "." + str(self.idx[mode - 1]) + ".traj",
-            )
-        )
-        self.replace_trajectory(traj=traj)
+        self.summary_energy.value=f"{self.energies[mode-1]:.3g}"
+        self.summary_frequency.value=f"{self.frequencies[mode-1]:>.0f}"
