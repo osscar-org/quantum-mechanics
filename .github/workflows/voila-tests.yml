@@ -59,3 +59,4 @@ jobs:
         with:
           git_remote_url: 'ssh://dokku@matcloud.xyz:22/osscar-quantum-mechanics'
           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+        if: github.event_name != 'pull_request'
