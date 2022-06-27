@@ -1,7 +1,7 @@
 {
     "VoilaConfiguration": {
         "template": "osscar",
-        "preheat_kernel": true,
+        "preheat_kernel": false,
         "enable_nbextensions": true
     },
     "VoilaExecutePreprocessor": {
