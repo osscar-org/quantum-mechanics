@@ -11,7 +11,13 @@
       "cull_idle_timeout": 120,
       "cull_interval": 60,
       "cull_busy": true,
-      "preheat_blacklist": ["./notebook/*/*.ipynb","./notebook/log.ipynb"],
+      "preheat_blacklist": [
+          "./notebook/band-theory/*.ipynb",
+          "./notebook/lattice-vibration/*.ipynb",
+          "./notebook/molecular-dynamics/*.ipynb",
+          "./notebook/quantum-mechanics/*.ipynb",
+          "./notebook/statistical-mechanics/*.ipynb",
+          "./notebook/log.ipynb"],
       "kernel_pools_config": {
           "default": {
               "pool_size": 1
