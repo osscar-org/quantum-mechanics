@@ -24,11 +24,10 @@ class NGLWidgets:
         # Simulation folder
         self.tmp_dir = tempfile.TemporaryDirectory(prefix="user_", dir=".")
 
+        # Initialize view with trajectory
         self.traj = trajectory
         self.view = nv.show_asetraj(self.traj)
 
-        # idx for oxygen atom
-        # TODO : change it to a dummy traj or
         self.zoom = 15
 
         # Layouts for all widgets
@@ -39,28 +38,27 @@ class NGLWidgets:
         layout_camera = widgets.Layout(width="50px")
         style = {"description_width": "initial"}
         self.button_x = widgets.Button(description="x", layout=layout_camera)
+        self.button_x.on_click(functools.partial(self.set_camera, direction="x"))
         self.button_y = widgets.Button(description="y", layout=layout_camera)
+        self.button_y.on_click(functools.partial(self.set_camera, direction="y"))
         self.button_z = widgets.Button(description="z", layout=layout_camera)
+        self.button_z.on_click(functools.partial(self.set_camera, direction="z"))
 
         # Outputs
         self.output_text = widgets.Output()
         self.output_movie = widgets.Output()
         self.output_camera = widgets.Output()
         self.output_gif = widgets.Output()
-
         self.output_camera_position = Output()
         self.output_camera_position_error = Output()
 
-        # Camera
-        self.button_x.on_click(functools.partial(self.set_camera, direction="x"))
-        self.button_y.on_click(functools.partial(self.set_camera, direction="y"))
-        self.button_z.on_click(functools.partial(self.set_camera, direction="z"))
 
+        # Custom camera orientation
         self.view.observe(self.on_orientation_change, names=["_camera_orientation"])
-        self.text_orientation = widgets.Textarea(value="Paste camera orientation here")
         self.camera_orientation_description = HTMLMath(
             r"Camera orientation :", layout=self.layout_description
         )
+        self.text_orientation = widgets.Textarea(value="Paste camera orientation here")
         self.text_orientation.observe(self.change_camera_position, names=["value"])
 
         # Movie
@@ -111,6 +109,7 @@ class NGLWidgets:
         self.tick_box_arrows = widgets.Checkbox(
             value=False,
         )
+        self.tick_box_arrows.observe(self.on_arrows_change,"value")
 
         self.slider_arrow_radius_description = HTMLMath(
             r"Arrow radius", layout=self.layout_description
@@ -185,71 +184,21 @@ class NGLWidgets:
         # Set base representation
         self.representation = "spacefill"
 
-    def on_orientation_change(self, *args):
-        with self.output_camera_position:
-            self.output_camera_position.clear_output()
-            position = [round(x, 1) for x in self.view._camera_orientation]
-            print(position)
-
-    def change_camera_position(self, *args):
-        orientation = json.loads(self.text_orientation.value)
-        with self.output_camera_position_error:
-            self.output_camera_position_error.clear_output()
-            if type(orientation) is not list or len(orientation) != 16:
-                print("Orientation must be a length 16 list")
-            else:
-                self.view._set_camera_orientation(orientation)
-
-    def set_camera(self, *args, direction="x"):
-        # See here for rotation matrix https://www.brainvoyager.com/bv/doc/UsersGuide/CoordsAndTransforms/SpatialTransformationMatrices.html
-
-        """
-        Set camera orientation along x,y,z axis
-        """
-        theta = np.pi / 2
-        Rx = np.array(
-            [
-                [self.zoom, 0, 0, 0],
-                [0, self.zoom * np.cos(theta), self.zoom * np.sin(theta), 0],
-                [0, -self.zoom * np.sin(theta), self.zoom * np.cos(theta), 0],
-                [0, 0, 0, 1],
-            ]
-        )
-        Ry = np.array(
-            [
-                [self.zoom * np.cos(theta), 0, -self.zoom * np.sin(theta), 0],
-                [0, self.zoom, 0, 0],
-                [self.zoom * np.sin(theta), 0, self.zoom * np.cos(theta), 0],
-                [0, 0, 0, 1],
-            ]
-        )
-        Rz = np.array(
-            [
-                [self.zoom * np.cos(theta), -self.zoom * np.sin(theta), 0, 0],
-                [self.zoom * np.sin(theta), self.zoom * np.cos(theta), 0, 0],
-                [0, 0, self.zoom, 0],
-                [0, 0, 0, 1],
-            ]
-        )
-        if direction == "x":
-            self.view._set_camera_orientation([x for x in Rx.flatten()])
-        if direction == "y":
-            self.view._set_camera_orientation([x for x in Ry.flatten()])
-        if direction == "z":
-            self.view._set_camera_orientation([x for x in Rz.flatten()])
-
     def replace_trajectory(self, *args, traj, representation="ball+stick"):
-
+        """
+        Update view with new trajectory
+        """
         self.traj = traj
         comp_ids = []
         orientation_ = self.view._camera_orientation
         orientation = [x for x in orientation_]
 
-        # Camera view is empty before viewing
-        if orientation:
-            # Keep last number to 1, as it is last number in rotation matrix
-            orientation.pop()
-            orientation.append(1)
+        # # Camera view is empty before viewing
+        # if orientation:
+        #     # Keep last number to 1, as it is last number in rotation matrix
+        #     orientation.pop()
+        #     orientation.append(1)
+
         # Need to remove arrows or new trajectory will not move
         self.removeArrows()
 
@@ -262,16 +211,20 @@ class NGLWidgets:
         # Once new view is added, we can remove old components
         for comp_id in comp_ids:
             self.view.remove_component(comp_id)
-
-        self.view._set_camera_orientation(orientation)
+        
+        # self.view._set_camera_orientation(orientation)
+        # Modify atoms representation - spacefill is default one
         self.modify_representation()
-        self.addArrows()
+
+        # Add arrows if tick box checked
+        if self.tick_box_arrows.value == True:
+            self.addArrows()
 
     def modify_representation(self, *args):
         """
-        Change the view representation to either spacefill or ball+stick.
-        Spacefill parameters : atoms radius
-        ball+stick parameters : atoms radius, aspect ratio
+        Change the view representation to either spacefill or ball+stick.\n
+        Spacefill parameters : atoms radius\n
+        ball+stick parameters : atoms radius, aspect ratio\n
         """
         self.view.clear_representations()
         if self.representation == "spacefill":
@@ -288,19 +241,36 @@ class NGLWidgets:
                 aspectRatio=self.slider_aspect_ratio.value,
             )
 
+    def addArrows(self, *args):
+        # https://github.com/nglviewer/nglview/discussions/1002
+        """
+        Abstract class to add arrows in animations \n
+        addArrows defined in NGLTrajectory,NGLTrajectory2D and NGLMolecule \n
+        """
+        pass
+
     def removeArrows(self):
+        # Adapted from https://projects.volkamerlab.org/teachopencadd/talktorials/T017_advanced_nglview_usage.html?highlight=nglview#Access-the-JavaScript-layer
+        """
+        Remove arrows from view
+        """
+        # Remove observed function from view to avoid calling multiple functions
+        if self.handler:
+            self.view.unobserve(self.handler.pop(), names=["frame"])
+
         self.view._execute_js_code(
             """
         this.stage.removeComponent(this.stage.getComponentsByName("my_shape").first)
         """
         )
-
-    def addArrows(self, *args):
+    def on_arrows_change(self, *args):
         """
-        Abstract class to add arrows in animations
-        addArrows defined in NGLTrajectory,NGLTrajectory2D and NGLMolecule
+        Toggle arrows view
         """
-        pass
+        if self.tick_box_arrows.value:
+            self.addArrows()
+        else:
+            self.removeArrows()
 
     def set_view_dimensions(self, width=640, height=480):
         """
@@ -360,6 +330,9 @@ class NGLWidgets:
         )
 
     def change_resolution(self, *args):
+        """
+        Change the view dimension with respect to dropdown value
+        """
         # Resolution value is set to half the wanted resolution, as the downloaded GIF has twice the resolution
         if self.dropdown_resolution.value == "480p":
             self.set_view_dimensions(320, 240)
@@ -377,6 +350,10 @@ class NGLWidgets:
             self.set_view_dimensions(500, 500)
 
     def make_movie(self, *args):
+        # Adapted from https://github.com/nglviewer/nglview/issues/928
+        """
+        Create a GIF of the current view animation
+        """
         # Remove gif preview
         self.output_gif.outputs = ()
         # Stop animation
@@ -429,6 +406,7 @@ class NGLWidgets:
             # Resets view dimensions to original
             self.set_view_dimensions()
 
+            # Compile pictures into gif
             self.compile_movie(directory=tmp_dir_frames.name, n_frames=n_frames)
             self.show_gif_preview()
 
@@ -449,7 +427,12 @@ class NGLWidgets:
         self.output_movie.append_stdout("Right click on GIF to download it")
 
     def compile_movie(self, *args, directory, n_frames):
-
+        """
+        Compile set of PNG pictures into GIF \n
+        Args:\n
+            directory : directory in which the pictures are located\n
+            n_frames : total number of pictures\n
+        """
         imagefiles = [
             os.path.join(directory, f"frame{i}.png") for i in range(0, n_frames)
         ]
@@ -457,6 +440,7 @@ class NGLWidgets:
         frame_per_second = round(1000 / (25 / self.slider_speed.value))
 
         im = mpy.ImageSequenceClip(imagefiles, fps=frame_per_second)
+        # Create temporary file name to avoid erasing previously created movies
         with tempfile.NamedTemporaryFile(
             dir=".", prefix="movie_", suffix=".gif", delete=False
         ) as tmpFile:
@@ -471,14 +455,75 @@ class NGLWidgets:
         Create GIF to be shown in notebook that can be downloaded
         """
         val = self.dropdown_resolution.value
+        # Adapt shown resolution to keep dimensions ratio
         if val == "480p":
             width, height = 400, 300
         elif val == "720p" or val == "1080p" or val == "1440p" or val == "2K":
             width, height = 400, 225
         elif val == "500x500p" or val == "1000x1000p":
             width, height = 400, 400
+
+        # Create visualisable GIF
         with open(self.tmpFileName_movie, "rb") as f:
             gif_bytes = f.read()
             gif = Image(data=gif_bytes, format="gif", width=width, height=height)
-
+        # Add GIF to output view
         self.output_gif.append_display_data(gif)
+
+    def on_orientation_change(self, *args):
+        """
+        Show real-time camera position
+        """
+        with self.output_camera_position:
+            self.output_camera_position.clear_output()
+            position = [round(x, 1) for x in self.view._camera_orientation]
+            print(position)
+
+    def change_camera_position(self, *args):
+        """
+        Update camera position from array
+        """
+        orientation = json.loads(self.text_orientation.value)
+        with self.output_camera_position_error:
+            self.output_camera_position_error.clear_output()
+            if type(orientation) is not list or len(orientation) != 16:
+                print("Orientation must be a length 16 list")
+            else:
+                self.view._set_camera_orientation(orientation)
+
+    def set_camera(self, *args, direction="x"):
+        # See here for rotation matrix https://www.brainvoyager.com/bv/doc/UsersGuide/CoordsAndTransforms/SpatialTransformationMatrices.html
+        """
+        Set camera orientation along x,y,z axis
+        """
+        theta = np.pi / 2
+        Rx = np.array(
+            [
+                [self.zoom, 0, 0, 0],
+                [0, self.zoom * np.cos(theta), self.zoom * np.sin(theta), 0],
+                [0, -self.zoom * np.sin(theta), self.zoom * np.cos(theta), 0],
+                [0, 0, 0, 1],
+            ]
+        )
+        Ry = np.array(
+            [
+                [self.zoom * np.cos(theta), 0, -self.zoom * np.sin(theta), 0],
+                [0, self.zoom, 0, 0],
+                [self.zoom * np.sin(theta), 0, self.zoom * np.cos(theta), 0],
+                [0, 0, 0, 1],
+            ]
+        )
+        Rz = np.array(
+            [
+                [self.zoom * np.cos(theta), -self.zoom * np.sin(theta), 0, 0],
+                [self.zoom * np.sin(theta), self.zoom * np.cos(theta), 0, 0],
+                [0, 0, self.zoom, 0],
+                [0, 0, 0, 1],
+            ]
+        )
+        if direction == "x":
+            self.view._set_camera_orientation([x for x in Rx.flatten()])
+        if direction == "y":
+            self.view._set_camera_orientation([x for x in Ry.flatten()])
+        if direction == "z":
+            self.view._set_camera_orientation([x for x in Rz.flatten()])
