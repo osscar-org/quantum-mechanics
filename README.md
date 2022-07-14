@@ -14,22 +14,23 @@ in the classroom. Students can also use them for self-learning.
 
 ## Local installation
 
-One can git clone this repository and install all the required packages locally.
+One can clone this repository and install all the required packages locally.
+To do so (ideally in a fresh python virtual environment, to reduce risks of version clashes of some of the dependencies), run the following commands:
 
 ```bash
 git clone https://github.com/osscar-org/quantum-mechanics.git
 cd quantum-mechanics
-pip install -e requirement.txt
+pip install -r requirements.txt
 ```
 
-To view the notebooks in the form of web application, one can type
+Then, to view the notebooks in the form of a web application, you can type
 the following command in the terminal:
 
 ```bash
 voila --template=osscar --VoilaConfiguration.enable_nbextensions=True notebook/
 ```
 
-Then, the web apps will be opened in the browser. 
+This will start the voila server and then open your default browser, where you can use the web application.
 
 ## Content
 
