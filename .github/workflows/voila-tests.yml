@@ -31,9 +31,6 @@ jobs:
         pip install --upgrade selenium
 
     - uses: nanasess/setup-chromedriver@master
-      with:
-        # Optional: do not specify to match Chrome's version
-        chromedriver-version: '102.0.5005.61'
     - run: |
         export DISPLAY=:99
         chromedriver --url-base=/wd/hub &
