@@ -18,7 +18,7 @@ class TestTest01():
   def teardown_method(self, method):
     self.driver.quit()
   
-  def test_test01(self):
+  def test_one_quantumwell(self):
     self.driver.get("http://localhost:8383/voila/render/index.ipynb")
     self.driver.set_window_size(1280, 720)
     self.driver.save_screenshot("index.png")
@@ -27,8 +27,29 @@ class TestTest01():
     self.driver.execute_script("window.scrollTo(0, 1000)")
     self.driver.save_screenshot("1quantumwell.png")
 
+  def test_asymmetricwell(self):
+    self.driver.get("http://localhost:8383/voila/render/index.ipynb")
+    self.driver.set_window_size(1280, 720)
+    self.driver.find_element(By.LINK_TEXT, "Avoided Crossing in 1D Asymmetric Quantum Well").click()
+    element = self.driver.find_element(By.CSS_SELECTOR, ".ui-state-active")
+    actions = ActionChains(self.driver)
+    actions.move_to_element(element).click_and_hold().perform()
+    element = self.driver.find_element(By.CSS_SELECTOR, ".p-Widget:nth-child(1) > .slider-container > .ui-slider")
+    actions = ActionChains(self.driver)
+    actions.move_to_element(element).perform()
+    element = self.driver.find_element(By.CSS_SELECTOR, ".p-Widget:nth-child(1) > .slider-container > .ui-slider")
+    actions = ActionChains(self.driver)
+    actions.move_to_element(element).release().perform()
+    self.driver.find_element(By.CSS_SELECTOR, ".ui-state-focus").click()
+    self.driver.save_screenshot("asymmetricwell.png")
+
 test = TestTest01()
 test.setup_method('Chrome')
-test.test_test01()
+test.test_one_quantumwell()
+test.teardown_method('Chrome')
+
+test = TestTest01()
+test.setup_method('Chrome')
+test.test_asymmetricwell()
 test.teardown_method('Chrome')
 
