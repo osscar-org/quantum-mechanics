@@ -9,6 +9,8 @@ from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+from PIL import Image
+import imagehash
 
 class TestTest01():
   def setup_method(self, method):
@@ -47,3 +49,11 @@ test.setup_method('Chrome')
 test.test_asymmetricwell()
 test.teardown_method('Chrome')
 
+hash0 = imagehash.average_hash(Image.open('asymmetricwell.png')) 
+hash1 = imagehash.average_hash(Image.open('test/asymmetricwell.png')) 
+cutoff = 5
+
+if hash0 - hash1 < cutoff:
+  print('images are similar')
+else:
+  raise Exception("The result is NOT the same as expected. Please check matplotlib version.")

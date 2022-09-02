@@ -15,11 +15,11 @@ jobs:
     - name: Install node
       uses: actions/setup-node@v1
       with:
-       node-version: '15.x'
+       node-version: '17.x'
     - name: Install Python
       uses: actions/setup-python@v2
       with:
-        python-version: '3.8'
+        python-version: '3.9'
         architecture: 'x64'
     - name: Install dependencies
       run: pip install -r requirements.txt
@@ -29,6 +29,8 @@ jobs:
         voila --template=osscar --enable_nbextensions=True notebook/ --port 8383 --no-browser &
         pip install --upgrade pytest
         pip install --upgrade selenium
+        pip install --upgrade Pillow
+        pip install --upgrade imagehash
 
     - uses: nanasess/setup-chromedriver@master
     - run: |
