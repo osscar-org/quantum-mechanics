@@ -31,6 +31,7 @@ class TestTest01():
     self.driver.get("http://localhost:8383/voila/render/index.ipynb")
     self.driver.set_window_size(1280, 720)
     self.driver.find_element(By.LINK_TEXT, "Avoided Crossing in 1D Asymmetric Quantum Well").click()
+    time.sleep(10)
     element = self.driver.find_element(By.CSS_SELECTOR, ".ui-state-active")
     actions = ActionChains(self.driver)
     actions.move_to_element(element).click_and_hold().perform()
