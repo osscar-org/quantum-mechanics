@@ -34,7 +34,7 @@ class TestTest01():
     self.driver.set_window_size(1280, 720)
     self.driver.find_element(By.LINK_TEXT, "Avoided Crossing in 1D Asymmetric Quantum Well").click()
     time.sleep(5)
-    self.driver.execute_script("window.scrollTo(0, 1000)")
+    self.driver.execute_script("window.scrollTo(0, 800)")
     self.driver.find_element(By.CSS_SELECTOR, "label:nth-child(2) > input").click()
     time.sleep(10)
     self.driver.save_screenshot("asymmetricwell.png")
@@ -51,7 +51,7 @@ test.teardown_method('Chrome')
 
 hash0 = imagehash.average_hash(Image.open('asymmetricwell.png')) 
 hash1 = imagehash.average_hash(Image.open('test/asymmetricwell.png')) 
-cutoff = 5
+cutoff = 1
 
 if hash0 - hash1 < cutoff:
   print('images are similar')
