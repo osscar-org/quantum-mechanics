@@ -36,7 +36,7 @@ class TestTest01():
     time.sleep(5)
     self.driver.execute_script("window.scrollTo(0, 1000)")
     self.driver.find_element(By.CSS_SELECTOR, "label:nth-child(2) > input").click()
-    time.sleep(3)
+    time.sleep(10)
     self.driver.save_screenshot("asymmetricwell.png")
 
 test = TestTest01()
