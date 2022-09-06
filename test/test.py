@@ -53,7 +53,7 @@ image2 = Image.open('test/asymmetricwell.png')
 
 diff = ImageChops.difference(image1, image2)
 
-if diff.getbox():
+if diff.getbbox():
   raise Exception("The result is NOT the same as expected. Please check matplotlib version.")
 else:
   print('images are the same')
