@@ -48,8 +48,8 @@ test.setup_method('Chrome')
 test.test_asymmetricwell()
 test.teardown_method('Chrome')
 
-image1 = Image.open('asymmetricwell.png')) 
-image2 = Image.open('test/asymmetricwell.png')) 
+image1 = Image.open('asymmetricwell.png') 
+image2 = Image.open('test/asymmetricwell.png') 
 
 diff = ImageChops.difference(image1, image2)
 
