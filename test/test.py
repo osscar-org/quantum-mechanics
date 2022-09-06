@@ -9,7 +9,7 @@ from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-from PIL import Image, ImageChops
+from PIL import Image, ImageChops, ImageStat
 
 class TestTest01():
   def setup_method(self, method):
@@ -52,8 +52,9 @@ image1 = Image.open('asymmetricwell.png')
 image2 = Image.open('test/asymmetricwell.png') 
 
 diff = ImageChops.difference(image1, image2)
+stat = ImageStat.Stat(diff)
 
-if diff.getbbox():
-  raise Exception("The result is NOT the same as expected. Please check matplotlib version.")
-else:
+if sum(stat.mean) == 0:
   print('images are the same')
+else:
+  raise Exception("The result is NOT the same as expected. Please check matplotlib version.")
