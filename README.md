@@ -85,6 +85,14 @@ Here are the tutorials to demonstrate the band theory of crystal systems.
 
 If you would like to contribute a new notebook to OSSCAR, see the [guide to contributing](https://www.osscar.org/code/contributing.html) on our website, where you can also find an example [notebook template](https://www.osscar.org/code/sample_notebook.html). 
 
+## How to cite
+
+When using the content of this repository, please cite the following article:
+
+  *D. Du et al., Comput. Phys. Commun. 282, 108546 (2023)*
+  https://doi.org/10.1016/j.cpc.2022.108546
+
+
 ## Acknowledgements
 
 We acknowledge support from the EPFL Open Science Fund via the [OSSCAR](http://www.osscar.org) project.
