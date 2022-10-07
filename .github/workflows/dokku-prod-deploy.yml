@@ -5,7 +5,7 @@ on:
     workflows:
       - Voila test
     types: [completed]
-    branches: [main]
+    branches: [master]
 
 jobs:
   Dokku-prod-deploy:
