@@ -10,3 +10,9 @@ updates:
     target-branch: develop
     schedule:
       interval: "daily"
+
+  - package-ecosystem: "pip" # See documentation for possible values
+    directory: "/" # Location of package manifests
+    target-branch: master
+    schedule:
+      interval: "daily"
