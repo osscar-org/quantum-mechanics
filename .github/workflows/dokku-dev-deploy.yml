@@ -1,17 +1,19 @@
-name: Dokku-Dev-Deploy
+name: Dokku matcloud.xyz deploy
 
 on:
-  push:
-    branches:
-      - develop
-  pull_request:
-    branches:
-      - develop
+  workflow_run:
+    workflows:
+      - Voila test
+    types: [completed]
+    branches: [main]
 
 jobs:
   Dokku-dev-deploy:
-    needs: voila
+    name: Dokku dev deploy
     runs-on: ubuntu-latest
+
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
     steps:
       - name: Cloning repo
         uses: actions/checkout@v2

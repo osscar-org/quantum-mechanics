@@ -1,4 +1,4 @@
-name: VoilaTest
+name: Voila test
 
 on:
   push:
