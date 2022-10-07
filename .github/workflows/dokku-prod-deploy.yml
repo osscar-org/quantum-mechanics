@@ -1,0 +1,27 @@
+name: Dokku-Prod-Deploy
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  Dokku-prod-deploy:
+    needs: voila
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cloning repo
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Push to dokku
+        uses: dokku/github-action@master
+        with:
+          git_remote_url: 'ssh://dokku@materialscloud.io:22/osscar-quantum-mechanics'
+          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+        if: github.event_name != 'pull_request'
+
