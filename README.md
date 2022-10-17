@@ -89,10 +89,8 @@ If you would like to contribute a new notebook to OSSCAR, see the [guide to cont
 
 When using the content of this repository, please cite the following article:
 
-  *D. Du et al., Comput. Phys. Commun. 282, 108546 (2023)*
-  https://doi.org/10.1016/j.cpc.2022.108546
-
-
+ D. Du, T. Baird, S. Bonella and G. Pizzi, OSSCAR, an open platform for collaborative development of computational tools for education in science, *Computer Physics Communications*, **282**, 108546 (2023).
+https://doi.org/10.1016/j.cpc.2022.108546
 ## Acknowledgements
 
 We acknowledge support from the EPFL Open Science Fund via the [OSSCAR](http://www.osscar.org) project.
