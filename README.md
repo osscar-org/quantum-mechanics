@@ -6,6 +6,7 @@ computational materials science. Jupyter notebooks are converted into
 interactive web applications. Professors can use them to demonstrate knowledge
 in the classroom. Students can also use them for self-learning.
 
+![example](./images/osscar-demo.gif)
 ![example](./images/examples.png)
 
 * Try on `Materials Cloud` (fast, a few seconds to load) [![Materials Cloud Tool osscar-qmcourse](https://raw.githubusercontent.com/materialscloud-org/mcloud-badge/main/badges/img/mcloud_badge_tools.svg)](https://osscar-quantum-mechanics.materialscloud.io)
