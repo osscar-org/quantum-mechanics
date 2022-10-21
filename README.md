@@ -1,7 +1,9 @@
 # **Interactive Notebooks: Quantum Mechanics and Computational Materials Science**
 [![Voila test](https://github.com/osscar-org/quantum-mechanics/actions/workflows/voila-test.yml/badge.svg)](https://github.com/osscar-org/quantum-mechanics/actions/workflows/voila-test.yml)
 
-**Introduction**: This is a repository for tutorials in quantum mechanics and
+## Introduction 
+
+This is a repository for tutorials in quantum mechanics and
 computational materials science. Jupyter notebooks are converted into
 interactive web applications. Professors can use them to demonstrate knowledge
 in the classroom. Students can also use them for self-learning.
