@@ -16,3 +16,4 @@ nglview~=3.0.3
 moviepy~=1.0.3
 ipyevents~=2.0.1
 ipython~=8.5.0
+ipywidgets~=8.0.2
