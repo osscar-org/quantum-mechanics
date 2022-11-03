@@ -1,6 +1,6 @@
 pip~=22.3
 voila~=0.3.6
-matplotlib~=3.6.1
+matplotlib~=3.6.2
 numpy~=1.23.4
 ipympl~=0.8.8
 scipy~=1.9.3 
