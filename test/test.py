@@ -57,4 +57,4 @@ stat = ImageStat.Stat(diff)
 if sum(stat.mean) == 0:
   print('images are the same')
 else:
-  print("The result is NOT the same as expected. Please check matplotlib version.")
+  raise Exception("The result is NOT the same as expected. Please check matplotlib version.")
