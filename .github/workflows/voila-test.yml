@@ -34,7 +34,6 @@ jobs:
         pip install --upgrade Pillow
 
     - uses: nanasess/setup-chromedriver@master
-      continue-on-error: true
     - run: |
         export DISPLAY=:99
         chromedriver --url-base=/wd/hub &
