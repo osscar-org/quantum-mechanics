@@ -1,4 +1,4 @@
-pip~=22.3
+pip~=23.0
 voila~=0.4.0
 matplotlib~=3.6.3
 numpy~=1.24.1
