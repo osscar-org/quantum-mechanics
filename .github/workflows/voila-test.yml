@@ -45,3 +45,7 @@ jobs:
         name: quantum-screenshot
         path: './*.png'
 
+    - name: Run the figures test
+      run: |
+        python3 $GITHUB_WORKSPACE/test/test_figures.py
+
