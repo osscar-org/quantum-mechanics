@@ -39,7 +39,6 @@ class TestTest01():
     download = self.driver.find_element(By.XPATH, "//button[@title='Download plot']")
     actions = ActionChains(self.driver)
     actions.move_to_element(download).click().perform()
-    os.rename("Figure 1.png", "asymmetricwell.png")
 
 test = TestTest01()
 test.setup_method('Chrome')

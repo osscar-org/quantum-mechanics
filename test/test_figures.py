@@ -1,6 +1,6 @@
 from PIL import Image, ImageChops, ImageStat
 
-image1 = Image.open('asymmetricwell.png') 
+image1 = Image.open('Figure 1.png') 
 image2 = Image.open('test/asymmetricwell.png') 
 
 diff = ImageChops.difference(image1, image2)
