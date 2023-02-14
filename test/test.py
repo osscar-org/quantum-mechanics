@@ -2,6 +2,7 @@
 import pytest
 import time
 import json
+import os
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
@@ -34,8 +35,11 @@ class TestTest01():
     time.sleep(5)
     self.driver.execute_script("window.scrollTo(0, 400)")
     self.driver.find_element(By.CSS_SELECTOR, "label:nth-child(2) > input").click()
-    time.sleep(10)
-    self.driver.save_screenshot("asymmetricwell.png")
+    time.sleep(5)
+    download = self.driver.find_elements(By.XPATH, "//a[@data-title='Download plot as a png']")[index]
+    actions = ActionChains(self.driver)
+    actions.move_to_element(download).click().perform()
+    os.rename("Figure 1.png", "asymmetricwell.png")
 
 test = TestTest01()
 test.setup_method('Chrome')
