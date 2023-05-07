@@ -89,6 +89,17 @@ Here are the tutorials to demonstrate the band theory of crystal systems.
 
 If you would like to contribute a new notebook to OSSCAR, see the [guide to contributing](https://www.osscar.org/code/contributing.html) on our website, where you can also find an example [notebook template](https://www.osscar.org/code/sample_notebook.html). 
 
+Note: the workflow for contributing a new notebook or modifying an existing notebook is as follows. First, ensure that you are up to date with the master branch by running
+```bash
+git checkout master
+git pull        
+```        
+You can then go ahead and create a branch off master to work on your new notebook or modifying an existing notebook
+```bash
+git checkout -b new_notebook_branch
+```
+After making your changes, you can push this new branch to the remote quantum-mechanics repo and open a pull request for this branch to be merged with the master branch. After review, it can be merged and automatically deployed to the materials cloud server.
+        
 ## How to cite
 
 When using the content of this repository, please cite the following article:
