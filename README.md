@@ -99,7 +99,26 @@ You can then go ahead and create a branch off master to work on your new noteboo
 git checkout -b new_notebook_branch
 ```
 After making your changes, you can push this new branch to the remote quantum-mechanics repo and open a pull request for this branch to be merged with the master branch. After review, it can be merged and automatically deployed to the materials cloud server.
-        
+
+## Development
+
+![explained](./images/development-explained.png)
+
+When you decide to extend or modify the notebook, please create a new branch
+from the current master branch by:
+
+```bash
+git checkout master
+git branch your-branch
+```
+
+Once you create a pull request from your branch to the master, the workflows
+will automatically deploy the apps to the mybinder.org and matcloud.xyz servers 
+(it needs to pass the voila test workflow). You can check and review the deployed apps.
+
+After merging the PR to the master branch, the web apps will be automatically
+deployed to the materialscloud.io server.
+
 ## How to cite
 
 When using the content of this repository, please cite the following article:
