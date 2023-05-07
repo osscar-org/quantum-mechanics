@@ -99,7 +99,10 @@ You can then go ahead and create a branch off master to work on your new noteboo
 git checkout -b new_notebook_branch
 ```
 After making your changes, you can push this new branch to the remote quantum-mechanics repo and open a pull request for this branch to be merged with the master branch. After review, it can be merged and automatically deployed to the materials cloud server.
-        
+
+## Development
+
+
 ## How to cite
 
 When using the content of this repository, please cite the following article:
