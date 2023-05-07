@@ -102,6 +102,7 @@ After making your changes, you can push this new branch to the remote quantum-me
 
 ## Development
 
+![explained](./images/development-explained.png)
 
 ## How to cite
 
