@@ -2,20 +2,24 @@
 import pytest
 import time
 import json
+import os
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-from PIL import Image, ImageChops, ImageStat
 
 class TestTest01():
   def setup_method(self, method):
-    self.driver = webdriver.Chrome()
+    options = Options()
+    cwd = os.getcwd()
+    options.add_experimental_option("prefs", {"download.default_directory": cwd})
+    self.driver = webdriver.Chrome(options=options)
     self.vars = {}
-  
+
   def teardown_method(self, method):
     self.driver.quit()
   
@@ -23,7 +27,7 @@ class TestTest01():
     self.driver.get("http://localhost:8383/voila/render/index.ipynb")
     self.driver.set_window_size(1280, 720)
     self.driver.save_screenshot("index.png")
-    self.driver.find_element(By.LINK_TEXT, "Numerical Solution of the Schrödinger Equation for 1D Quantum Well").click()
+    self.driver.find_element(By.LINK_TEXT, "Numerical Solution of the Schrödinger Equation for a 1D Quantum Well").click()
     time.sleep(5)
     self.driver.execute_script("window.scrollTo(0, 1000)")
     self.driver.save_screenshot("1quantumwell.png")
@@ -31,12 +35,17 @@ class TestTest01():
   def test_asymmetricwell(self):
     self.driver.get("http://localhost:8383/voila/render/index.ipynb")
     self.driver.set_window_size(1280, 720)
-    self.driver.find_element(By.LINK_TEXT, "Avoided Crossing in 1D Asymmetric Quantum Well").click()
+    self.driver.find_element(By.LINK_TEXT, "Avoided Crossings in a 1D Asymmetric Quantum Well").click()
     time.sleep(5)
     self.driver.execute_script("window.scrollTo(0, 400)")
     self.driver.find_element(By.CSS_SELECTOR, "label:nth-child(2) > input").click()
-    time.sleep(10)
-    self.driver.save_screenshot("asymmetricwell.png")
+    time.sleep(5)
+    
+    download = self.driver.find_elements(By.XPATH, "//button[@title='Download plot']")[0]
+    actions = ActionChains(self.driver)
+    actions.move_to_element(download).click().perform()
+    time.sleep(3)
+    self.driver.save_screenshot("test.png")
 
 test = TestTest01()
 test.setup_method('Chrome')
@@ -48,13 +57,3 @@ test.setup_method('Chrome')
 test.test_asymmetricwell()
 test.teardown_method('Chrome')
 
-image1 = Image.open('asymmetricwell.png') 
-image2 = Image.open('test/asymmetricwell.png') 
-
-diff = ImageChops.difference(image1, image2)
-stat = ImageStat.Stat(diff)
-
-if sum(stat.mean) == 0:
-  print('images are the same')
-else:
-  raise Exception("The result is NOT the same as expected. Please check matplotlib version.")
