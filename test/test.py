@@ -27,7 +27,7 @@ class TestTest01():
     self.driver.get("http://localhost:8383/voila/render/index.ipynb")
     self.driver.set_window_size(1280, 720)
     self.driver.save_screenshot("index.png")
-    self.driver.find_element(By.LINK_TEXT, "Numerical Solution of the Schrödinger Equation for 1D Quantum Well").click()
+    self.driver.find_element(By.LINK_TEXT, "Numerical Solution of the Schrödinger Equation for a 1D Quantum Well").click()
     time.sleep(5)
     self.driver.execute_script("window.scrollTo(0, 1000)")
     self.driver.save_screenshot("1quantumwell.png")
@@ -35,7 +35,7 @@ class TestTest01():
   def test_asymmetricwell(self):
     self.driver.get("http://localhost:8383/voila/render/index.ipynb")
     self.driver.set_window_size(1280, 720)
-    self.driver.find_element(By.LINK_TEXT, "Avoided Crossing in 1D Asymmetric Quantum Well").click()
+    self.driver.find_element(By.LINK_TEXT, "Avoided Crossings in a 1D Asymmetric Quantum Well").click()
     time.sleep(5)
     self.driver.execute_script("window.scrollTo(0, 400)")
     self.driver.find_element(By.CSS_SELECTOR, "label:nth-child(2) > input").click()
