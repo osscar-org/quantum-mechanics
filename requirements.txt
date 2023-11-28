@@ -15,4 +15,4 @@ pandas~=2.1.1
 nglview~=3.0.8
 moviepy~=1.0.3
 ipyevents~=2.0.2
-ipython~=8.15.0
+ipython~=8.18.1
