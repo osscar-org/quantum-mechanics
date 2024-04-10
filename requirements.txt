@@ -11,5 +11,6 @@ seekpath
 plotly
 nglview
 moviepy
+ipympl
 widget-bzvisualizer
 widget-bandsplot
