@@ -1,5 +1,6 @@
 import numpy as np
 import os
+import logging
 
 import matplotlib.pyplot as plt
 import ipywidgets as widgets
@@ -8,7 +9,9 @@ from ase import Atoms
 from ase.io.trajectory import Trajectory
 from sympy import *
 from NGLUtilsClass import NGLWidgets
-
+from ipywidgets import Output
+import sys
+sys.stdout = open('/dev/stdout', 'w')
 
 class NGLTrajectory(NGLWidgets):
     def __init__(self, trajectory):
@@ -71,11 +74,13 @@ class NGLTrajectory(NGLWidgets):
         self.x = 0
         self.y = 0
         self.ka = 0
+        #target_k=np.pi/2
         self.ka_array = np.linspace(-2 * np.pi, 2 * np.pi, 101)
         self.idx = 50 # idx corresponding to ka=0
         self.optic = False
-
         self.init_delay = 20
+    
+
 
     def addArrows(self, *args):
         '''
@@ -428,6 +433,7 @@ class NGLTrajectory(NGLWidgets):
 
         # Selected frequency point
         (self.point,) = self.ax.plot([], [], ".", c="crimson", markersize=15)
+        self.point.set_data((np.pi/2, 1)) # default to non-trivial k-point
 
         self.ax.set_xlabel("k")
         self.ax.set_ylabel("$\omega$")
@@ -458,6 +464,15 @@ class NGLTrajectory(NGLWidgets):
             self.lines_op.set_data(([], []))
             self.lines_ac_out.set_data(([], []))
             self.lines_op_out.set_data(([], []))
+            
+            # set default k point for monatomic chain
+            self.x=np.pi/2
+            self.idx = (np.abs(self.ka_array - self.x)).argmin()
+            self.ka = self.ka_array[self.idx]
+
+            w = self.w[self.idx]
+            self.point.set_data((self.ka, w))
+
 
         elif self.button_chain.value == "diatomic":
             # Reduce figure width to "half" the size, since x axis is half as big now.
@@ -480,6 +495,13 @@ class NGLTrajectory(NGLWidgets):
             # Remove monoatomic chain lines
             self.lines.set_data(([], []))
             self.lines_out.set_data(([], []))
+            
+            # set default k point for diatomic chain
+            self.x=np.pi/2
+            self.idx = (np.abs(self.ka_array - self.x)).argmin()
+            self.ka = self.ka_array[self.idx]
+            w= self.w_ac[self.idx]
+            self.point.set_data((self.ka, w))
 
         # First BZ limit
         self.ax.plot([-np.pi, -np.pi], [0, 2.2], "k--", linewidth=1)
@@ -490,16 +512,24 @@ class NGLTrajectory(NGLWidgets):
         # 2.2 works well for initial height
         self.ax.set_ybound(0, 2.2)
 
-        self.point.set_data((0, 0))
+        # set default point on dispersion
         self.fig.canvas.mpl_connect("button_press_event", self.onclick)
         plt.ion()
 
     def onclick(self, event):
+        if event==None:
+            
+            self.x=0.0
+            self.y=0.0
+        else:
+            self.x = event.xdata
+            self.y = event.ydata
+
+       
         """
         Determine frequency and k point upon click on band dispersion figure
         """
-        self.x = event.xdata
-        self.y = event.ydata
+       
 
         # Get the idx of the closest k in the array
         self.idx = (np.abs(self.ka_array - self.x)).argmin()
