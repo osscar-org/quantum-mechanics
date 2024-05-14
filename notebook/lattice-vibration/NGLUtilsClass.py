@@ -95,7 +95,7 @@ class NGLWidgets:
             r"Arrow amplitude", layout=self.layout_description
         )
         self.slider_amp_arrow = widgets.FloatSlider(
-            value=0.5,
+            value=2.0,
             min=0.1,
             max=5.01,
             step=0.1,

@@ -162,10 +162,16 @@ class NGLTrajectory2D(NGLWidgets):
         self.kx_array = np.linspace(-1.5 * np.pi, 1.5 * np.pi, 61)
         self.ky_array = np.linspace(-1.5 * np.pi, 1.5 * np.pi, 61)
         self.KX, self.KY = np.meshgrid(self.kx_array, self.ky_array)
-        # Center of Brillouin zone
-        self.idx_x = 30
-        self.idx_y = 30
+        
+        # Initialize to nontrivial k-point
+        self.x=np.pi/2
+        self.y=np.pi/2
+        self.idx_x = (np.abs(self.kx_array - self.x)).argmin()
+        self.idx_y = (np.abs(self.ky_array - self.y)).argmin()
 
+        kx = self.kx_array[self.idx_x]
+        ky = self.ky_array[self.idx_y]
+       
 
         # kx,ky bounds are 1.5*BZ edge
         self.kx_array_honey = np.linspace(-1.5 * 2 * np.pi / 3, 1.5 * 2 * np.pi / 3, 61)
@@ -176,8 +182,8 @@ class NGLTrajectory2D(NGLWidgets):
         self.KX_honey, self.KY_honey = np.meshgrid(
             self.kx_array_honey, self.ky_array_honey
         )
-        self.idx_x_honey = 30
-        self.idx_y_honey = 30
+        self.idx_x_honey = 50
+        self.idx_y_honey = 50
 
         # View settings
         self.init_delay = 20
@@ -498,7 +504,15 @@ class NGLTrajectory2D(NGLWidgets):
         self.ax.set_yticks(np.linspace(-np.pi, np.pi, 5))
         self.ax.set_yticklabels(["$-\pi/a$", "", "0", "", "$\pi/a$"])
 
-        (self.point,) = self.ax.plot([0], [0], ".", c="crimson", markersize=10)
+        
+        self.x=np.pi/2
+        self.y=np.pi/2
+        self.idx_x = (np.abs(self.kx_array - self.x)).argmin()
+        self.idx_y = (np.abs(self.ky_array - self.y)).argmin()
+
+        kx = self.kx_array[self.idx_x]
+        ky = self.ky_array[self.idx_y]
+        (self.point,) = self.ax.plot([kx], [ky], ".", c="crimson", markersize=10) # TODO CHANGE INITIAL MARKER POS
 
         self.fig.canvas.mpl_connect("button_press_event", self.onclick)
         plt.ion()
@@ -544,7 +558,20 @@ class NGLTrajectory2D(NGLWidgets):
         self.ax_.plot([20, 20], [0, 10000], "k--")
         self.ax_.plot([40, 40], [0, 10000], "k--")
 
-        (self.point_,) = self.ax_.plot([], [], "r.", markersize=10)
+                
+        self.x=np.pi/2
+        self.y=np.pi/2
+        self.idx_x = (np.abs(self.kx_array - self.x)).argmin()
+        self.idx_y = (np.abs(self.ky_array - self.y)).argmin()
+
+        kx = self.kx_array[self.idx_x]
+        ky = self.ky_array[self.idx_y]
+        
+        # default chosen to be on gamma-M
+        idx = np.where(np.all([kx, ky] == np.c_[self.kx_GM, self.ky_GM], axis=1))[
+                0
+            ][0]
+        (self.point_,) = self.ax_.plot([idx], [self.w_long[self.idx_x][self.idx_y]], "r.", markersize=10)
 
         # Position of the high symmetry points
         self.ax_.set_xticks([0, 20, 40, 60])
