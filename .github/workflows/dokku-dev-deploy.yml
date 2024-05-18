@@ -21,10 +21,16 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Push to dokku
+      - name: Push to dokku (PR open)
         uses: dokku/github-action@master
         with:
           git_remote_url: 'ssh://dokku@matcloud.xyz:22/osscar-quantum-mechanics'
           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
-        if: github.event_name == 'pull_request'
+        if: ${{ github.event_name == 'pull_request' && github.event.action == 'opened' }} 
 
+      - name: Push to dokku (PR synchronize)
+        uses: dokku/github-action@master
+        with:
+          git_remote_url: 'ssh://dokku@matcloud.xyz:22/osscar-quantum-mechanics'
+          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+        if: ${{ github.event_name == 'pull_request' && github.event.action == 'synchronize' }} 
