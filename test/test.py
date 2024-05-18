@@ -26,6 +26,7 @@ class TestTest01():
   def test_one_quantumwell(self):
     self.driver.get("http://localhost:8383/voila/render/index.ipynb")
     self.driver.set_window_size(1280, 720)
+    time.sleep(3)
     self.driver.save_screenshot("index.png")
     self.driver.find_element(By.LINK_TEXT, "Numerical Solution of the Schrödinger Equation for a 1D Quantum Well").click()
     time.sleep(5)
