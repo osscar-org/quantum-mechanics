@@ -22,7 +22,7 @@ class TestTest01():
 
   def teardown_method(self, method):
     self.driver.quit()
-  
+
   def test_one_quantumwell(self):
     self.driver.get("http://localhost:8383/voila/render/index.ipynb")
     self.driver.set_window_size(1280, 720)
@@ -35,12 +35,13 @@ class TestTest01():
   def test_asymmetricwell(self):
     self.driver.get("http://localhost:8383/voila/render/index.ipynb")
     self.driver.set_window_size(1280, 720)
+    time.sleep(3)
     self.driver.find_element(By.LINK_TEXT, "Avoided Crossings in a 1D Asymmetric Quantum Well").click()
     time.sleep(5)
     self.driver.execute_script("window.scrollTo(0, 400)")
     self.driver.find_element(By.CSS_SELECTOR, "label:nth-child(2) > input").click()
     time.sleep(5)
-    
+
     download = self.driver.find_elements(By.XPATH, "//button[@title='Download plot']")[0]
     actions = ActionChains(self.driver)
     actions.move_to_element(download).click().perform()
