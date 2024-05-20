@@ -477,7 +477,7 @@ class NGLWidgets:
         with self.output_camera_position:
             self.output_camera_position.clear_output()
             position = [round(x, 1) for x in self.view._camera_orientation]
-            print(position)
+            #print(position)
 
     def change_camera_position(self, *args):
         """

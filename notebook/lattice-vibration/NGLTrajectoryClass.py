@@ -22,7 +22,7 @@ class NGLTrajectory(NGLWidgets):
             r"Oscillations amplitude", layout=self.layout_description
         )
         self.slider_amplitude = widgets.FloatSlider(
-            value=0.12,
+            value=0.04,
             min=0.01,
             max=0.24,
             step=0.01,
@@ -70,13 +70,14 @@ class NGLTrajectory(NGLWidgets):
         # Output to show slider_M
         self.output_ratio = widgets.Output()
 
-        # Point is initialized at (0,0), and in acoustic mode
+        # Point is initialized at x=pi/2 and in acoustic mode
         self.x = 0
         self.y = 0
         self.ka = 0
-        #target_k=np.pi/2
+        target_k=np.pi/2
         self.ka_array = np.linspace(-2 * np.pi, 2 * np.pi, 101)
-        self.idx = 50 # idx corresponding to ka=0
+        self.idx = int(101*(target_k+2*np.pi)/(4*np.pi)) # idx corresponding to ka=0
+        #self.idx = 50 # idx corresponding to ka=0
         self.optic = False
         self.init_delay = 20
     
@@ -469,7 +470,7 @@ class NGLTrajectory(NGLWidgets):
             self.x=np.pi/2
             self.idx = (np.abs(self.ka_array - self.x)).argmin()
             self.ka = self.ka_array[self.idx]
-
+            self.y=self.ka
             w = self.w[self.idx]
             self.point.set_data((self.ka, w))
 
@@ -519,8 +520,8 @@ class NGLTrajectory(NGLWidgets):
     def onclick(self, event):
         if event==None:
             
-            self.x=0.0
-            self.y=0.0
+            self.x=self.x
+            self.y=self.y
         else:
             self.x = event.xdata
             self.y = event.ydata
