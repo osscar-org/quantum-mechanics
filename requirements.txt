@@ -13,4 +13,4 @@ nglview~=3.1.2
 moviepy~=1.0.3
 ipympl~=0.9.3
 widget-bzvisualizer~=0.2.7
-widget-bandsplot~=0.7.0
+widget-bandsplot~=0.7.3
