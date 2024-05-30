@@ -1,14 +1,14 @@
-matplotlib~=3.8.4
+matplotlib~=3.9.0
 numpy~=1.26.4
 scipy~=1.13.0
-pandas~=2.2.1
+pandas~=2.2.2
 sympy~=1.12
 voila~=0.5.6
 voila-osscar-template~=0.3.2
 Cython~=3.0.10
 ase~=3.22.1
 seekpath~=2.1.0
-plotly~=5.20.0
+plotly~=5.22.0
 nglview~=3.1.2
 moviepy~=1.0.3
 ipympl~=0.9.3
