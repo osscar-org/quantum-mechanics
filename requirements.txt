@@ -1,7 +1,7 @@
 matplotlib~=3.9.0
 numpy~=1.26.4
 scipy~=1.13.0
-pandas~=2.2.1
+pandas~=2.2.2
 sympy~=1.12
 voila~=0.5.6
 voila-osscar-template~=0.3.2
