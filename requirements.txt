@@ -11,6 +11,6 @@ seekpath~=2.1.0
 plotly~=5.22.0
 nglview~=3.1.2
 moviepy~=1.0.3
-ipympl~=0.9.3
+ipympl~=0.9.4
 widget-bzvisualizer~=0.2.7
 widget-bandsplot~=0.7.3
