@@ -2,6 +2,7 @@
   "VoilaConfiguration": {
     "enable_nbextensions": true,  
     "theme": "light",
+    "classic_tree": true,
     "template": "osscar"
   }
 }
