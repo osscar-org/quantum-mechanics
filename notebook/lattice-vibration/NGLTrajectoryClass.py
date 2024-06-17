@@ -9,7 +9,7 @@ from ase import Atoms
 from ase.io.trajectory import Trajectory
 from sympy import *
 from NGLUtilsClass import NGLWidgets
-from ipywidgets import Output
+from ipywidgets import Output, AppLayout
 import sys
 sys.stdout = open('/dev/stdout', 'w')
 
@@ -62,10 +62,12 @@ class NGLTrajectory(NGLWidgets):
             value="monoatomic",
             disabled=False,
         )
+        self.button_chain.observe(self.show_slider_M, "value")
         self.button_chain.observe(self.compute_dispersion, "value")
         self.button_chain.observe(self.compute_trajectory_1D, "value")
+        
         self.button_chain.observe(self.band_dispersion, "value")
-        self.button_chain.observe(self.show_slider_M, "value")
+        
 
         # Output to show slider_M
         self.output_ratio = widgets.Output()
@@ -526,7 +528,6 @@ class NGLTrajectory(NGLWidgets):
             self.x = event.xdata
             self.y = event.ydata
 
-       
         """
         Determine frequency and k point upon click on band dispersion figure
         """
@@ -588,4 +589,7 @@ class NGLTrajectory(NGLWidgets):
             self.output_ratio.clear_output()
         elif self.button_chain.value == "diatomic":
             with self.output_ratio:
-                display(widgets.HBox([self.slider_M_description, self.slider_M]))
+                full_layout= AppLayout(left_sidebar=widgets.HBox([self.slider_M_description,self.slider_M]))
+           
+                display(full_layout)
+                #display(widgets.HBox([self.slider_M_description, self.slider_M]))
