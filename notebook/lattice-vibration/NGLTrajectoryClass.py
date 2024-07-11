@@ -78,6 +78,9 @@ class NGLTrajectory(NGLWidgets):
         self.ka = 0
         target_k=np.pi/2
         self.ka_array = np.linspace(-2 * np.pi, 2 * np.pi, 101)
+        # Ensure that k-point at Gamma is identically zero to ensure correct phonon eigenmodes
+        self.ka_array[np.abs(self.ka_array) < 1e-5] = 0
+        
         self.idx = int(101*(target_k+2*np.pi)/(4*np.pi)) # idx corresponding to ka=0
         #self.idx = 50 # idx corresponding to ka=0
         self.optic = False
