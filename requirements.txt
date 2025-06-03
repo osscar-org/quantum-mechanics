@@ -14,3 +14,7 @@ moviepy~=1.0.3
 ipympl~=0.9.4
 widget-bzvisualizer~=0.2.7
 widget-bandsplot~=0.7.3
+ipywidgets~=7.7.5
+widgetsnbextension~=3.6.10
+pythreejs~=2.4.2
+bqplot~=0.12.38
