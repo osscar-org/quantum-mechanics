@@ -24,4 +24,4 @@ CMD ["voila",\
     "--MappingKernelManager.cull_interval=60",\
     "--MappingKernelManager.cull_idle_timeout=600",\
     "--MappingKernelManager.cull_busy=False",\
-    "notebook/"]
+    "notebook/index.ipynb"]
